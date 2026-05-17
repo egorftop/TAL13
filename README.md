@@ -10,6 +10,7 @@ The site includes a wallet profile, live DEX price lookup, aluminum market refer
 - `data/aluminum.json` - generated aluminum reference price/history
 - `scripts/update-aluminum.mjs` - updater for aluminum data
 - `.github/workflows/update-aluminum.yml` - scheduled GitHub Action for data refresh
+- `Tal13.sol` - TAL13 BEP-20 token contract
 - `tal13-logo.png` - token logo
 - `TokenLocker.sol` - optional token lock smart contract
 - `README.md` - project notes
