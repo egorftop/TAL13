@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TAL13 - BNB Chain Community Token</title>
-  <meta name="description" content="TAL13 is a BEP-20 community token on BNB Chain inspired by aluminum and atomic number 13." />
+  <title>TAL13 - Wallet, Market And Token Lock</title>
+  <meta name="description" content="TAL13 wallet profile, live DEX price, aluminum market reference and token lock interface on BNB Chain." />
   <meta property="og:title" content="TAL13" />
-  <meta property="og:description" content="A clean BEP-20 community token experience on BNB Chain." />
+  <meta property="og:description" content="Wallet profile, live price and aluminum market reference for TAL13 on BNB Chain." />
   <meta property="og:image" content="./tal13-logo.png" />
   <meta property="og:type" content="website" />
   <link rel="icon" href="./tal13-logo.png" />
   <style>
     :root {
       --bg: #080a0d;
-      --bg-soft: #10151b;
       --panel: rgba(255, 255, 255, .072);
       --panel-strong: rgba(255, 255, 255, .11);
       --line: rgba(255, 255, 255, .15);
@@ -24,6 +23,7 @@
       --accent-dark: #06231f;
       --amber: #f2bd57;
       --green: #80e28c;
+      --red: #ff8d8d;
       --shadow: 0 24px 70px rgba(0, 0, 0, .34);
       --radius: 8px;
       --max: 1160px;
@@ -74,6 +74,12 @@
       font: inherit;
     }
 
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .48;
+      transform: none;
+    }
+
     .shell {
       width: min(var(--max), calc(100% - 40px));
       margin: 0 auto;
@@ -83,9 +89,9 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      backdrop-filter: blur(16px);
-      background: rgba(8, 10, 13, .72);
       border-bottom: 1px solid var(--line);
+      background: rgba(8, 10, 13, .72);
+      backdrop-filter: blur(16px);
     }
 
     .nav {
@@ -117,14 +123,25 @@
       font-weight: 700;
     }
 
-    .nav-links {
+    .nav-right,
+    .nav-links,
+    .language-switch {
       display: flex;
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
     }
 
-    .nav-links a {
+    .nav-right {
+      margin-left: auto;
+    }
+
+    .language-switch {
+      flex-wrap: nowrap;
+    }
+
+    .nav-links a,
+    .lang-btn {
       padding: 9px 11px;
       border-radius: var(--radius);
       color: var(--muted);
@@ -132,9 +149,22 @@
       font-weight: 800;
     }
 
-    .nav-links a:hover {
+    .nav-links a:hover,
+    .lang-btn:hover,
+    .lang-btn.active {
       color: var(--text);
       background: rgba(255, 255, 255, .07);
+    }
+
+    .lang-btn {
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      border-color: var(--line);
+      color: var(--accent);
     }
 
     .hero {
@@ -229,7 +259,7 @@
       transition: transform .18s ease, border-color .18s ease, background .18s ease;
     }
 
-    .btn:hover {
+    .btn:hover:not(:disabled) {
       transform: translateY(-1px);
       border-color: rgba(49, 212, 199, .55);
       color: var(--text);
@@ -337,7 +367,7 @@
     }
 
     .section-head {
-      max-width: 680px;
+      max-width: 720px;
       margin-bottom: 28px;
     }
 
@@ -357,6 +387,11 @@
       align-items: start;
     }
 
+    .grid.wallet-grid {
+      grid-template-columns: .85fr 1.15fr;
+      align-items: stretch;
+    }
+
     .card {
       height: 100%;
       padding: 22px;
@@ -374,14 +409,15 @@
       margin-bottom: 0;
     }
 
-    .pill-row {
+    .profile-head {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 18px;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
     }
 
-    .pill {
+    .status-pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -392,15 +428,60 @@
       background: rgba(255, 255, 255, .055);
       font-size: 13px;
       font-weight: 800;
+      white-space: nowrap;
     }
 
-    .dot {
+    .status-pill::before {
+      content: "";
       width: 8px;
       height: 8px;
       border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .status-pill.connected::before {
       background: var(--green);
     }
 
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .metric {
+      min-height: 108px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(0, 0, 0, .18);
+    }
+
+    .metric span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1.12;
+      word-break: break-word;
+    }
+
+    .metric small {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .address-row,
     .contract-box {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
@@ -420,12 +501,62 @@
       word-break: break-all;
     }
 
-    .copy-state {
+    .copy-state,
+    .inline-state {
       min-height: 21px;
       margin-top: 10px;
       color: var(--accent);
       font-size: 14px;
       font-weight: 800;
+    }
+
+    .market-panel {
+      display: grid;
+      grid-template-columns: .86fr 1.14fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .chart-card {
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .chart-value {
+      color: var(--text);
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    canvas {
+      width: 100%;
+      min-height: 220px;
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(0, 0, 0, .18);
+    }
+
+    .source-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .link-grid {
@@ -478,6 +609,12 @@
       color: #ffe2a4;
       background: rgba(242, 189, 87, .11);
       font-weight: 800;
+    }
+
+    .status-banner.ready {
+      border-color: rgba(128, 226, 140, .45);
+      color: #c8ffd0;
+      background: rgba(128, 226, 140, .10);
     }
 
     label {
@@ -558,17 +695,24 @@
       flex-wrap: wrap;
     }
 
-    @media (max-width: 960px) {
+    @media (max-width: 1040px) {
+      .hero,
+      .grid.wallet-grid,
+      .market-panel {
+        grid-template-columns: 1fr;
+      }
+
       .hero {
         min-height: auto;
-        grid-template-columns: 1fr;
         padding-top: 44px;
       }
 
       .hero-visual {
         min-height: 340px;
       }
+    }
 
+    @media (max-width: 960px) {
       h1 {
         font-size: 56px;
       }
@@ -591,18 +735,42 @@
       }
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 760px) {
       .shell,
       .ticker-strip {
         width: min(var(--max), calc(100% - 28px));
       }
 
       .nav {
+        position: relative;
         min-height: 68px;
+        gap: 8px;
+      }
+
+      .nav-right {
+        position: fixed;
+        left: 240px;
+        right: auto;
+        top: 14px;
+        margin-left: 0;
+        transform: none;
+        z-index: 30;
       }
 
       .nav-links {
         display: none;
+      }
+
+      .language-switch {
+        display: grid;
+        grid-template-columns: repeat(2, 34px);
+        gap: 4px;
+      }
+
+      .lang-btn {
+        min-width: 34px;
+        width: 34px;
+        padding: 7px 8px;
       }
 
       .brand img {
@@ -624,8 +792,8 @@
       }
 
       .lead {
-        font-size: 17px;
         max-width: 340px;
+        font-size: 17px;
       }
 
       .hero .actions {
@@ -646,13 +814,26 @@
         width: min(220px, 62vw);
       }
 
-      .contract-box {
+      .metric-grid,
+      .contract-box,
+      .address-row {
         grid-template-columns: 1fr;
       }
 
       .actions .btn,
-      .contract-box .btn {
+      .contract-box .btn,
+      .address-row .btn {
         width: 100%;
+      }
+
+      .chart-top,
+      .profile-head {
+        display: block;
+      }
+
+      .chart-top .status-pill,
+      .profile-head .status-pill {
+        margin-top: 12px;
       }
 
       section {
@@ -668,30 +849,35 @@
         <img src="./tal13-logo.png" alt="TAL13 logo" />
         <div>
           TAL13
-          <span>BNB Chain token</span>
+          <span data-i18n="brandSubtitle">BNB Chain token</span>
         </div>
       </a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#about">Token</a>
-        <a href="#contract">Contract</a>
-        <a href="#links">Links</a>
-        <a href="#locker">Lock</a>
-      </nav>
+      <div class="nav-right">
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#wallet" data-i18n="navWallet">Wallet</a>
+          <a href="#market" data-i18n="navMarket">Market</a>
+          <a href="#contract" data-i18n="navContract">Contract</a>
+          <a href="#locker" data-i18n="navLock">Lock</a>
+        </nav>
+        <div class="language-switch" aria-label="Language">
+          <button class="lang-btn" type="button" data-lang-button="en">EN</button>
+          <button class="lang-btn" type="button" data-lang-button="ru">RU</button>
+        </div>
+      </div>
     </div>
   </header>
 
   <main id="top">
     <section class="shell hero" aria-labelledby="hero-title">
       <div>
-        <div class="eyebrow">BEP-20 on BNB Chain</div>
+        <div class="eyebrow" data-i18n="heroEyebrow">BEP-20 on BNB Chain</div>
         <h1 id="hero-title">TAL13</h1>
-        <p class="lead">
-          A community token built around a clean metallic identity, fast BNB Chain rails,
-          and a verified smart contract.
+        <p class="lead" data-i18n="heroLead">
+          Wallet profile, live DEX price and aluminum market reference for the TAL13 community.
         </p>
         <div class="actions">
-          <a class="btn primary" href="https://web3.okx.com/ru/token/bsc/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer">Trade on OKX DEX</a>
-          <a class="btn" href="https://bscscan.com/token/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer">View Token</a>
+          <button class="btn primary" type="button" onclick="connectWallet()" data-i18n="connectWallet">Connect Wallet</button>
+          <a class="btn" href="https://web3.okx.com/ru/token/bsc/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer" data-i18n="tradeOkx">Trade on OKX DEX</a>
           <a class="btn ghost" href="https://t.me/TAL13Official" target="_blank" rel="noopener noreferrer">Telegram</a>
         </div>
       </div>
@@ -706,69 +892,140 @@
 
     <div class="ticker-strip" aria-label="TAL13 quick facts">
       <div class="ticker-item">
-        <span>Symbol</span>
-        <strong>TAL13</strong>
+        <span data-i18n="tickerTokenPrice">Token Price</span>
+        <strong id="tickerTalPrice">--</strong>
       </div>
       <div class="ticker-item">
-        <span>Network</span>
+        <span data-i18n="tickerAlKg">Aluminum / kg</span>
+        <strong id="tickerAlKg">--</strong>
+      </div>
+      <div class="ticker-item">
+        <span data-i18n="tickerNetwork">Network</span>
         <strong>BNB Chain</strong>
       </div>
       <div class="ticker-item">
-        <span>Standard</span>
-        <strong>BEP-20</strong>
-      </div>
-      <div class="ticker-item">
-        <span>Contract</span>
-        <strong>Verified</strong>
+        <span data-i18n="tickerContract">Contract</span>
+        <strong data-i18n="verified">Verified</strong>
       </div>
     </div>
 
-    <section id="about" class="shell">
+    <section id="wallet" class="shell">
       <div class="section-head">
-        <h2>Designed Around The Number 13</h2>
-        <p>
-          TAL13 takes its visual language from aluminum: sharp, light, industrial,
-          and easy to recognize across wallets, explorers and exchange pages.
-        </p>
+        <h2 data-i18n="walletTitle">Wallet Profile</h2>
+        <p data-i18n="walletLead">Connect a wallet to see TAL13 balance, BNB balance, USD value and aluminum kg equivalent.</p>
       </div>
 
-      <div class="grid">
-        <article class="card highlight">
-          <h3>Clear Token Identity</h3>
-          <p>Name, ticker, network and contract are presented in one place so users can verify the right asset quickly.</p>
-          <div class="pill-row">
-            <span class="pill"><span class="dot"></span> TAL13</span>
-            <span class="pill">Atomic number 13</span>
+      <div class="grid wallet-grid">
+        <div class="card highlight">
+          <div class="profile-head">
+            <div>
+              <h3 data-i18n="profileTitle">Profile</h3>
+              <p class="small" data-i18n="profileHint">Works with MetaMask, OKX Wallet and other injected wallets.</p>
+            </div>
+            <span class="status-pill" id="walletState" data-i18n="walletDisconnected">Not connected</span>
           </div>
-        </article>
-        <article class="card">
-          <h3>BNB Chain Ready</h3>
-          <p>Fast settlement, broad wallet support and direct BscScan visibility make the token easy to inspect and follow.</p>
-        </article>
-        <article class="card">
-          <h3>Community First</h3>
-          <p>The official Telegram channel is the main place for TAL13 announcements, updates and community discussion.</p>
-        </article>
+
+          <div class="address-row">
+            <div class="mono" id="walletAddress" data-i18n="walletAddressEmpty">Connect wallet to show address</div>
+            <button class="btn" type="button" onclick="copyWalletAddress()" id="copyWalletBtn" disabled data-i18n="copy">Copy</button>
+          </div>
+          <div class="inline-state" id="walletStatus" aria-live="polite"></div>
+
+          <div class="actions">
+            <button class="btn primary" type="button" onclick="connectWallet()" data-i18n="connectWallet">Connect Wallet</button>
+            <button class="btn" type="button" onclick="refreshWalletProfile()" id="refreshWalletBtn" disabled data-i18n="refresh">Refresh</button>
+          </div>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric">
+            <span data-i18n="metricTalBalance">TAL13 Balance</span>
+            <strong id="talBalance">--</strong>
+            <small id="talBalanceUsd">--</small>
+          </div>
+          <div class="metric">
+            <span data-i18n="metricBnbBalance">BNB Balance</span>
+            <strong id="bnbBalance">--</strong>
+            <small id="walletNetwork">BNB Smart Chain</small>
+          </div>
+          <div class="metric">
+            <span data-i18n="metricUsdValue">Wallet Value</span>
+            <strong id="walletUsdValue">--</strong>
+            <small data-i18n="metricUsdHint">Based on DEX price</small>
+          </div>
+          <div class="metric">
+            <span data-i18n="metricAlEquivalent">Aluminum Equivalent</span>
+            <strong id="walletAlKg">--</strong>
+            <small data-i18n="metricAlHint">Market reference calculation</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="market" class="shell">
+      <div class="section-head">
+        <h2 data-i18n="marketTitle">Market Data</h2>
+        <p data-i18n="marketLead">Live TAL13 price from DEX liquidity and a daily aluminum reference in USD per kilogram.</p>
+      </div>
+
+      <div class="market-panel">
+        <div class="metric-grid">
+          <div class="metric">
+            <span data-i18n="metricTalPrice">TAL13 Price</span>
+            <strong id="talPriceUsd">--</strong>
+            <small id="talPriceSource">DexScreener</small>
+          </div>
+          <div class="metric">
+            <span data-i18n="metricTalAl">1 TAL13 in Aluminum</span>
+            <strong id="talAlEquivalent">--</strong>
+            <small data-i18n="metricAlHint">Market reference calculation</small>
+          </div>
+          <div class="metric">
+            <span data-i18n="metricLiquidity">Selected Liquidity</span>
+            <strong id="selectedLiquidity">--</strong>
+            <small id="selectedPair">--</small>
+          </div>
+          <div class="metric">
+            <span data-i18n="metricAlTon">Aluminum / metric ton</span>
+            <strong id="aluminumPriceTon">--</strong>
+            <small id="aluminumUpdated">--</small>
+          </div>
+        </div>
+
+        <div class="card chart-card">
+          <div class="chart-top">
+            <div>
+              <h3 data-i18n="chartTitle">Aluminum Price Chart</h3>
+              <div class="chart-value" id="aluminumPriceKg">--</div>
+            </div>
+            <span class="status-pill connected" id="priceState" data-i18n="loadingPrices">Loading prices</span>
+          </div>
+          <canvas id="aluminumChart" width="900" height="320" aria-label="Aluminum price chart"></canvas>
+          <div class="source-row">
+            <span id="aluminumSource">--</span>
+            <span id="priceStatus" aria-live="polite"></span>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="contract" class="shell">
       <div class="grid two">
         <div class="section-head">
-          <h2>Official Contract</h2>
-          <p>Use this address when checking the token in a wallet, explorer or DEX interface.</p>
+          <h2 data-i18n="contractTitle">Official Contract</h2>
+          <p data-i18n="contractLead">Use this address when checking the token in a wallet, explorer or DEX interface.</p>
         </div>
 
         <div class="card">
-          <h3>TAL13 token address</h3>
+          <h3 data-i18n="contractAddressTitle">TAL13 token address</h3>
           <div class="contract-box">
             <div class="mono" id="contractAddress">0xb88238565e5b168bc0257b80ce41067b5bf9fee3</div>
-            <button class="btn" type="button" onclick="copyContract()">Copy</button>
+            <button class="btn" type="button" onclick="copyContract()" data-i18n="copy">Copy</button>
           </div>
           <div class="copy-state" id="copyState" aria-live="polite"></div>
           <div class="actions">
-            <a class="btn primary" href="https://bscscan.com/address/0xb88238565e5b168bc0257b80ce41067b5bf9fee3#code" target="_blank" rel="noopener noreferrer">Verified Source</a>
-            <a class="btn" href="https://bscscan.com/token/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer">BscScan Token Page</a>
+            <a class="btn primary" href="https://bscscan.com/address/0xb88238565e5b168bc0257b80ce41067b5bf9fee3#code" target="_blank" rel="noopener noreferrer" data-i18n="verifiedSource">Verified Source</a>
+            <a class="btn" href="https://bscscan.com/token/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer" data-i18n="bscscanToken">BscScan Token Page</a>
           </div>
         </div>
       </div>
@@ -776,54 +1033,54 @@
 
     <section id="links" class="shell">
       <div class="section-head">
-        <h2>Official Links</h2>
-        <p>Jump straight to the live TAL13 pages used by traders and community members.</p>
+        <h2 data-i18n="linksTitle">Official Links</h2>
+        <p data-i18n="linksLead">Jump straight to the live TAL13 pages used by traders and community members.</p>
       </div>
 
       <div class="link-grid">
         <a class="link-tile" href="https://web3.okx.com/ru/token/bsc/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer">
           <strong>OKX DEX</strong>
-          <span>Open market page</span>
+          <span data-i18n="openMarket">Open market page</span>
         </a>
         <a class="link-tile" href="https://bscscan.com/token/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer">
           <strong>BscScan</strong>
-          <span>Inspect token activity</span>
+          <span data-i18n="inspectToken">Inspect token activity</span>
         </a>
         <a class="link-tile" href="https://t.me/TAL13Official" target="_blank" rel="noopener noreferrer">
           <strong>Telegram</strong>
-          <span>Join official channel</span>
+          <span data-i18n="joinChannel">Join official channel</span>
         </a>
       </div>
     </section>
 
     <section id="locker" class="shell">
       <div class="section-head">
-        <h2>Token Lock</h2>
-        <p>Lock TAL13 for a selected number of days after the locker contract is deployed and connected.</p>
+        <h2 data-i18n="lockTitle">Token Lock</h2>
+        <p data-i18n="lockLead">Lock TAL13 for a selected number of days after the locker contract is deployed and connected.</p>
       </div>
 
       <div class="locker-panel">
         <div class="card">
-          <h3>Create Lock</h3>
-          <div class="status-banner" id="lockerBanner">Locker contract is not connected yet.</div>
+          <h3 data-i18n="createLock">Create Lock</h3>
+          <div class="status-banner" id="lockerBanner" data-i18n="lockerPending">Locker pending deployment.</div>
 
-          <label for="lockAmount">Amount TAL13</label>
+          <label for="lockAmount" data-i18n="amountTal">Amount TAL13</label>
           <input id="lockAmount" type="number" min="0" step="0.000000000000000001" placeholder="Example: 10" />
 
-          <label for="lockDays">Days</label>
+          <label for="lockDays" data-i18n="days">Days</label>
           <input id="lockDays" type="number" min="1" step="1" value="1" />
 
           <div class="actions">
-            <button class="btn" type="button" onclick="connectWallet()">Connect Wallet</button>
-            <button class="btn primary" type="button" onclick="approveAndLock()">Approve & Lock</button>
+            <button class="btn" type="button" onclick="connectWallet()" data-i18n="connectWallet">Connect Wallet</button>
+            <button class="btn primary" type="button" onclick="approveAndLock()" id="lockButton" disabled data-i18n="approveLock">Approve & Lock</button>
           </div>
           <div id="status" aria-live="polite"></div>
         </div>
 
         <div class="card">
-          <h3>Your Locks</h3>
-          <p class="small">Connect a wallet on BNB Smart Chain to load available TAL13 locks.</p>
-          <button class="btn" type="button" onclick="loadLocks()">Refresh Locks</button>
+          <h3 data-i18n="yourLocks">Your Locks</h3>
+          <p class="small" id="locksHint" data-i18n="locksPending">Locker contract is not deployed yet. Your locks will appear here after deployment.</p>
+          <button class="btn" type="button" onclick="loadLocks()" id="refreshLocksBtn" disabled data-i18n="refreshLocks">Refresh Locks</button>
           <div class="table-wrap" id="locksTable"></div>
         </div>
       </div>
@@ -832,7 +1089,7 @@
 
   <footer>
     <div class="shell footer-row">
-      <span>&copy; TAL13. Community token on BNB Chain.</span>
+      <span data-i18n="footerText">&copy; TAL13. Community token on BNB Chain.</span>
       <span class="mono">0xb88238565e5b168bc0257b80ce41067b5bf9fee3</span>
     </div>
   </footer>
@@ -842,6 +1099,167 @@
     const TAL13_ADDRESS = "0xb88238565e5b168bc0257b80ce41067b5bf9fee3";
     const LOCKER_ADDRESS = "PASTE_LOCKER_CONTRACT_ADDRESS_HERE";
     const BSC_CHAIN_ID_HEX = "0x38";
+    const BSC_CHAIN_ID_DECIMAL = 56;
+    const DEXSCREENER_URL = `https://api.dexscreener.com/token-pairs/v1/bsc/${TAL13_ADDRESS}`;
+
+    const translations = {
+      en: {
+        brandSubtitle: "BNB Chain token",
+        navWallet: "Wallet",
+        navMarket: "Market",
+        navContract: "Contract",
+        navLock: "Lock",
+        heroEyebrow: "BEP-20 on BNB Chain",
+        heroLead: "Wallet profile, live DEX price and aluminum market reference for the TAL13 community.",
+        connectWallet: "Connect Wallet",
+        tradeOkx: "Trade on OKX DEX",
+        tickerTokenPrice: "Token Price",
+        tickerAlKg: "Aluminum / kg",
+        tickerNetwork: "Network",
+        tickerContract: "Contract",
+        verified: "Verified",
+        walletTitle: "Wallet Profile",
+        walletLead: "Connect a wallet to see TAL13 balance, BNB balance, USD value and aluminum kg equivalent.",
+        profileTitle: "Profile",
+        profileHint: "Works with MetaMask, OKX Wallet and other injected wallets.",
+        walletDisconnected: "Not connected",
+        walletConnected: "Connected",
+        walletAddressEmpty: "Connect wallet to show address",
+        copy: "Copy",
+        copied: "Copied.",
+        copyFailed: "Copy failed.",
+        refresh: "Refresh",
+        metricTalBalance: "TAL13 Balance",
+        metricBnbBalance: "BNB Balance",
+        metricUsdValue: "Wallet Value",
+        metricUsdHint: "Based on DEX price",
+        metricAlEquivalent: "Aluminum Equivalent",
+        metricAlHint: "Market reference calculation",
+        marketTitle: "Market Data",
+        marketLead: "Live TAL13 price from DEX liquidity and a daily aluminum reference in USD per kilogram.",
+        metricTalPrice: "TAL13 Price",
+        metricTalAl: "1 TAL13 in Aluminum",
+        metricLiquidity: "Selected Liquidity",
+        metricAlTon: "Aluminum / metric ton",
+        chartTitle: "Aluminum Price Chart",
+        loadingPrices: "Loading prices",
+        pricesLoaded: "Prices loaded",
+        pricesFallback: "Price source unavailable",
+        contractTitle: "Official Contract",
+        contractLead: "Use this address when checking the token in a wallet, explorer or DEX interface.",
+        contractAddressTitle: "TAL13 token address",
+        verifiedSource: "Verified Source",
+        bscscanToken: "BscScan Token Page",
+        linksTitle: "Official Links",
+        linksLead: "Jump straight to the live TAL13 pages used by traders and community members.",
+        openMarket: "Open market page",
+        inspectToken: "Inspect token activity",
+        joinChannel: "Join official channel",
+        lockTitle: "Token Lock",
+        lockLead: "Lock TAL13 for a selected number of days after the locker contract is deployed and connected.",
+        createLock: "Create Lock",
+        lockerPending: "Locker pending deployment.",
+        lockerReady: "Locker contract connected.",
+        amountTal: "Amount TAL13",
+        days: "Days",
+        approveLock: "Approve & Lock",
+        yourLocks: "Your Locks",
+        locksPending: "Locker contract is not deployed yet. Your locks will appear here after deployment.",
+        refreshLocks: "Refresh Locks",
+        footerText: "© TAL13. Community token on BNB Chain.",
+        walletMissing: "MetaMask or OKX Wallet not found.",
+        walletConnecting: "Connecting wallet...",
+        walletSwitching: "Switching to BNB Smart Chain...",
+        walletReady: "Wallet profile updated.",
+        walletRejected: "Wallet connection was rejected.",
+        enterAmount: "Enter token amount.",
+        minLock: "Minimum lock period is 1 day.",
+        lockerNotActive: "Locker is pending deployment. Add the deployed TokenLocker address to index.html to activate locking.",
+        noLocks: "No locks found.",
+        tokenPriceUnavailable: "TAL13 price unavailable",
+        aluminumUnavailable: "Aluminum data unavailable",
+        sourceLabel: "Source",
+        lastUpdated: "Updated"
+      },
+      ru: {
+        brandSubtitle: "токен BNB Chain",
+        navWallet: "Кошелек",
+        navMarket: "Рынок",
+        navContract: "Контракт",
+        navLock: "Лок",
+        heroEyebrow: "BEP-20 в BNB Chain",
+        heroLead: "Профиль кошелька, живая DEX-цена и рыночный ориентир алюминия для TAL13.",
+        connectWallet: "Подключить кошелек",
+        tradeOkx: "Торговать на OKX DEX",
+        tickerTokenPrice: "Цена токена",
+        tickerAlKg: "Алюминий / кг",
+        tickerNetwork: "Сеть",
+        tickerContract: "Контракт",
+        verified: "Проверен",
+        walletTitle: "Профиль кошелька",
+        walletLead: "Подключи кошелек, чтобы увидеть баланс TAL13, BNB, стоимость в USD и эквивалент в кг алюминия.",
+        profileTitle: "Профиль",
+        profileHint: "Работает с MetaMask, OKX Wallet и другими injected-кошельками.",
+        walletDisconnected: "Не подключен",
+        walletConnected: "Подключен",
+        walletAddressEmpty: "Подключи кошелек, чтобы увидеть адрес",
+        copy: "Копировать",
+        copied: "Скопировано.",
+        copyFailed: "Не удалось скопировать.",
+        refresh: "Обновить",
+        metricTalBalance: "Баланс TAL13",
+        metricBnbBalance: "Баланс BNB",
+        metricUsdValue: "Стоимость кошелька",
+        metricUsdHint: "Расчет по DEX-цене",
+        metricAlEquivalent: "Эквивалент алюминия",
+        metricAlHint: "Расчетный рыночный ориентир",
+        marketTitle: "Рыночные данные",
+        marketLead: "Живая цена TAL13 по DEX-ликвидности и дневной ориентир алюминия в USD за килограмм.",
+        metricTalPrice: "Цена TAL13",
+        metricTalAl: "1 TAL13 в алюминии",
+        metricLiquidity: "Выбранная ликвидность",
+        metricAlTon: "Алюминий / тонна",
+        chartTitle: "График цены алюминия",
+        loadingPrices: "Загрузка цен",
+        pricesLoaded: "Цены загружены",
+        pricesFallback: "Источник цены недоступен",
+        contractTitle: "Официальный контракт",
+        contractLead: "Используй этот адрес при проверке токена в кошельке, обозревателе или DEX-интерфейсе.",
+        contractAddressTitle: "Адрес токена TAL13",
+        verifiedSource: "Проверенный код",
+        bscscanToken: "Страница BscScan",
+        linksTitle: "Официальные ссылки",
+        linksLead: "Быстрый переход на живые страницы TAL13 для трейдеров и сообщества.",
+        openMarket: "Открыть рынок",
+        inspectToken: "Проверить активность",
+        joinChannel: "Открыть канал",
+        lockTitle: "Лок токенов",
+        lockLead: "Лок TAL13 на выбранное количество дней после деплоя и подключения locker-контракта.",
+        createLock: "Создать лок",
+        lockerPending: "Locker ожидает деплоя.",
+        lockerReady: "Locker-контракт подключен.",
+        amountTal: "Количество TAL13",
+        days: "Дни",
+        approveLock: "Approve & Lock",
+        yourLocks: "Твои локи",
+        locksPending: "Locker-контракт еще не развернут. После деплоя твои локи появятся здесь.",
+        refreshLocks: "Обновить локи",
+        footerText: "© TAL13. Community token on BNB Chain.",
+        walletMissing: "MetaMask или OKX Wallet не найден.",
+        walletConnecting: "Подключаю кошелек...",
+        walletSwitching: "Переключаю на BNB Smart Chain...",
+        walletReady: "Профиль кошелька обновлен.",
+        walletRejected: "Подключение кошелька отклонено.",
+        enterAmount: "Введите количество токенов.",
+        minLock: "Минимальный срок лока — 1 день.",
+        lockerNotActive: "Locker ожидает деплоя. Добавь адрес TokenLocker в index.html, чтобы включить лок.",
+        noLocks: "Локи не найдены.",
+        tokenPriceUnavailable: "Цена TAL13 недоступна",
+        aluminumUnavailable: "Данные алюминия недоступны",
+        sourceLabel: "Источник",
+        lastUpdated: "Обновлено"
+      }
+    };
 
     const tokenAbi = [
       "function approve(address spender,uint256 amount) external returns (bool)",
@@ -856,44 +1274,95 @@
       "function getLocks(address user) external view returns (tuple(uint256 amount,uint256 unlockTime,bool withdrawn)[])"
     ];
 
-    let provider;
-    let signer;
-    let user;
+    const state = {
+      lang: "en",
+      provider: null,
+      signer: null,
+      user: null,
+      tokenDecimals: 18,
+      talBalance: null,
+      bnbBalance: null,
+      talPriceUsd: null,
+      talPair: null,
+      aluminum: null
+    };
+
+    function t(key) {
+      return translations[state.lang][key] || translations.en[key] || key;
+    }
+
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.innerText = value;
+    }
 
     function setStatus(message) {
-      document.getElementById("status").innerText = message;
+      setText("status", message);
+    }
+
+    function setWalletStatus(message) {
+      setText("walletStatus", message);
+    }
+
+    function setPriceStatus(message) {
+      setText("priceStatus", message);
+    }
+
+    function formatUsd(value, digits = 2) {
+      if (!Number.isFinite(value)) return "--";
+      return new Intl.NumberFormat(state.lang === "ru" ? "ru-RU" : "en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: digits
+      }).format(value);
+    }
+
+    function formatNumber(value, digits = 4) {
+      if (!Number.isFinite(value)) return "--";
+      return new Intl.NumberFormat(state.lang === "ru" ? "ru-RU" : "en-US", {
+        maximumFractionDigits: digits
+      }).format(value);
+    }
+
+    function shortAddress(address) {
+      return address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "--";
     }
 
     function lockerIsActive() {
       return LOCKER_ADDRESS && !LOCKER_ADDRESS.includes("PASTE_");
     }
 
-    function checkLockerAddress() {
-      if (!lockerIsActive()) {
-        setStatus("Locker is not active yet. Deploy TokenLocker.sol and add its contract address to index.html.");
-        return false;
-      }
-
-      return true;
+    function detectLanguage() {
+      const saved = localStorage.getItem("tal13-language");
+      if (saved === "ru" || saved === "en") return saved;
+      return navigator.language && navigator.language.toLowerCase().startsWith("ru") ? "ru" : "en";
     }
 
-    function updateLockerBanner() {
-      const banner = document.getElementById("lockerBanner");
+    function applyLanguage(lang) {
+      state.lang = lang;
+      localStorage.setItem("tal13-language", lang);
+      document.documentElement.lang = lang;
 
-      if (lockerIsActive()) {
-        banner.innerText = "Locker contract connected.";
-        banner.style.borderColor = "rgba(128, 226, 140, .45)";
-        banner.style.color = "#c8ffd0";
-        banner.style.background = "rgba(128, 226, 140, .10)";
-      }
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        node.innerHTML = t(key);
+      });
+
+      document.querySelectorAll("[data-lang-button]").forEach((button) => {
+        button.classList.toggle("active", button.getAttribute("data-lang-button") === lang);
+      });
+
+      renderMarket();
+      renderWalletProfile();
+      updateLockerState();
     }
 
-    async function copyContract() {
-      const state = document.getElementById("copyState");
+    async function copyText(value, stateElementId) {
+      const stateElement = document.getElementById(stateElementId);
 
       function fallbackCopy() {
         const textarea = document.createElement("textarea");
-        textarea.value = TAL13_ADDRESS;
+        textarea.value = value;
         textarea.setAttribute("readonly", "");
         textarea.style.position = "fixed";
         textarea.style.opacity = "0";
@@ -906,26 +1375,27 @@
 
       try {
         if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(TAL13_ADDRESS);
-        } else {
-          fallbackCopy();
+          await navigator.clipboard.writeText(value);
+        } else if (!fallbackCopy()) {
+          throw new Error("fallback copy failed");
         }
 
-        state.innerText = "Contract copied.";
+        if (stateElement) stateElement.innerText = t("copied");
       } catch (error) {
-        state.innerText = fallbackCopy()
-          ? "Contract copied."
-          : "Copy failed. Select the address manually.";
+        if (stateElement) stateElement.innerText = t("copyFailed");
       }
     }
 
-    async function connectWallet() {
-      if (!window.ethereum) {
-        setStatus("MetaMask or OKX Wallet not found.");
-        return;
-      }
+    function copyContract() {
+      copyText(TAL13_ADDRESS, "copyState");
+    }
 
-      await window.ethereum.request({ method: "eth_requestAccounts" });
+    function copyWalletAddress() {
+      if (state.user) copyText(state.user, "walletStatus");
+    }
+
+    async function switchToBsc() {
+      setWalletStatus(t("walletSwitching"));
 
       try {
         await window.ethereum.request({
@@ -933,35 +1403,320 @@
           params: [{ chainId: BSC_CHAIN_ID_HEX }]
         });
       } catch (error) {
-        setStatus("Please switch your wallet to BNB Smart Chain Mainnet.");
+        if (error && error.code === 4902) {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [{
+              chainId: BSC_CHAIN_ID_HEX,
+              chainName: "BNB Smart Chain",
+              nativeCurrency: {
+                name: "BNB",
+                symbol: "BNB",
+                decimals: 18
+              },
+              rpcUrls: ["https://bsc-dataseed.binance.org/"],
+              blockExplorerUrls: ["https://bscscan.com"]
+            }]
+          });
+        } else {
+          throw error;
+        }
+      }
+    }
+
+    async function connectWallet() {
+      if (!window.ethereum) {
+        setWalletStatus(t("walletMissing"));
+        setStatus(t("walletMissing"));
+        return;
       }
 
-      provider = new ethers.BrowserProvider(window.ethereum);
-      signer = await provider.getSigner();
-      user = await signer.getAddress();
-      setStatus("Connected: " + user);
+      try {
+        setWalletStatus(t("walletConnecting"));
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        await switchToBsc();
+
+        state.provider = new ethers.BrowserProvider(window.ethereum);
+        state.signer = await state.provider.getSigner();
+        state.user = await state.signer.getAddress();
+
+        await refreshWalletProfile();
+      } catch (error) {
+        const message = error && (error.code === 4001 || error.code === "ACTION_REJECTED")
+          ? t("walletRejected")
+          : (error.shortMessage || error.message || error);
+        setWalletStatus(message);
+        setStatus(message);
+      }
+    }
+
+    async function refreshWalletProfile() {
+      if (!state.signer || !state.provider || !state.user) {
+        await connectWallet();
+        return;
+      }
+
+      try {
+        const network = await state.provider.getNetwork();
+        if (Number(network.chainId) !== BSC_CHAIN_ID_DECIMAL) {
+          await switchToBsc();
+          state.provider = new ethers.BrowserProvider(window.ethereum);
+          state.signer = await state.provider.getSigner();
+        }
+
+        const token = new ethers.Contract(TAL13_ADDRESS, tokenAbi, state.signer);
+        const [decimals, talBalanceRaw, bnbBalanceRaw] = await Promise.all([
+          token.decimals(),
+          token.balanceOf(state.user),
+          state.provider.getBalance(state.user)
+        ]);
+
+        state.tokenDecimals = Number(decimals);
+        state.talBalance = Number(ethers.formatUnits(talBalanceRaw, decimals));
+        state.bnbBalance = Number(ethers.formatEther(bnbBalanceRaw));
+
+        renderWalletProfile();
+        setWalletStatus(t("walletReady"));
+        setStatus(t("walletReady"));
+      } catch (error) {
+        const message = error.shortMessage || error.message || error;
+        setWalletStatus(String(message));
+      }
+    }
+
+    function renderWalletProfile() {
+      const walletState = document.getElementById("walletState");
+      const connected = Boolean(state.user);
+
+      if (walletState) {
+        walletState.classList.toggle("connected", connected);
+        walletState.innerText = connected ? t("walletConnected") : t("walletDisconnected");
+      }
+
+      setText("walletAddress", connected ? `${shortAddress(state.user)} (${state.user})` : t("walletAddressEmpty"));
+      document.getElementById("copyWalletBtn").disabled = !connected;
+      document.getElementById("refreshWalletBtn").disabled = !connected;
+
+      setText("talBalance", state.talBalance === null ? "--" : `${formatNumber(state.talBalance, 6)} TAL13`);
+      setText("bnbBalance", state.bnbBalance === null ? "--" : `${formatNumber(state.bnbBalance, 6)} BNB`);
+
+      const walletUsd = state.talBalance !== null && Number.isFinite(state.talPriceUsd)
+        ? state.talBalance * state.talPriceUsd
+        : null;
+      const aluminumKg = walletUsd !== null && state.aluminum && Number.isFinite(state.aluminum.priceUsdPerKg)
+        ? walletUsd / state.aluminum.priceUsdPerKg
+        : null;
+
+      setText("talBalanceUsd", walletUsd === null ? "--" : formatUsd(walletUsd, 4));
+      setText("walletUsdValue", walletUsd === null ? "--" : formatUsd(walletUsd, 4));
+      setText("walletAlKg", aluminumKg === null ? "--" : `${formatNumber(aluminumKg, 6)} kg`);
+    }
+
+    async function fetchTalPrice() {
+      const response = await fetch(DEXSCREENER_URL, { cache: "no-store" });
+      if (!response.ok) throw new Error("DexScreener request failed");
+
+      const pairs = await response.json();
+      const validPairs = Array.isArray(pairs)
+        ? pairs.filter((pair) => Number.isFinite(Number(pair.priceUsd)))
+        : [];
+
+      if (!validPairs.length) throw new Error("No TAL13 pairs found");
+
+      validPairs.sort((a, b) => Number(b.liquidity?.usd || 0) - Number(a.liquidity?.usd || 0));
+      state.talPair = validPairs[0];
+      state.talPriceUsd = Number(state.talPair.priceUsd);
+    }
+
+    async function fetchAluminumData() {
+      const response = await fetch(`./data/aluminum.json?v=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error("Aluminum data request failed");
+      state.aluminum = await response.json();
+    }
+
+    async function loadMarketData() {
+      const results = await Promise.allSettled([fetchTalPrice(), fetchAluminumData()]);
+      const failed = results.some((result) => result.status === "rejected");
+
+      renderMarket();
+      renderWalletProfile();
+
+      const priceState = document.getElementById("priceState");
+      if (priceState) {
+        priceState.classList.toggle("connected", !failed);
+        priceState.innerText = failed ? t("pricesFallback") : t("pricesLoaded");
+      }
+
+      if (failed) {
+        setPriceStatus(results
+          .filter((result) => result.status === "rejected")
+          .map((result) => result.reason.message || result.reason)
+          .join(" | "));
+      } else {
+        setPriceStatus("");
+      }
+    }
+
+    function renderMarket() {
+      const talPriceText = Number.isFinite(state.talPriceUsd) ? formatUsd(state.talPriceUsd, 6) : "--";
+      const aluminumKg = state.aluminum && Number.isFinite(state.aluminum.priceUsdPerKg)
+        ? state.aluminum.priceUsdPerKg
+        : null;
+      const aluminumTon = state.aluminum && Number.isFinite(state.aluminum.priceUsdPerMetricTon)
+        ? state.aluminum.priceUsdPerMetricTon
+        : null;
+      const talAlKg = Number.isFinite(state.talPriceUsd) && aluminumKg
+        ? state.talPriceUsd / aluminumKg
+        : null;
+
+      setText("tickerTalPrice", talPriceText);
+      setText("tickerAlKg", aluminumKg ? formatUsd(aluminumKg, 4) : "--");
+      setText("talPriceUsd", talPriceText);
+      setText("talAlEquivalent", talAlKg === null ? "--" : `${formatNumber(talAlKg, 6)} kg`);
+      setText("aluminumPriceKg", aluminumKg ? `${formatUsd(aluminumKg, 4)} / kg` : "--");
+      setText("aluminumPriceTon", aluminumTon ? formatUsd(aluminumTon, 2) : "--");
+
+      const liquidity = Number(state.talPair?.liquidity?.usd || NaN);
+      setText("selectedLiquidity", Number.isFinite(liquidity) ? formatUsd(liquidity, 2) : "--");
+      setText("selectedPair", state.talPair ? `${state.talPair.dexId || "DEX"} · ${shortAddress(state.talPair.pairAddress || "")}` : "--");
+      setText("talPriceSource", state.talPair ? `DexScreener · ${state.talPair.quoteToken?.symbol || ""}` : "DexScreener");
+
+      if (state.aluminum) {
+        const updated = state.aluminum.updatedAt ? new Date(state.aluminum.updatedAt).toLocaleString(state.lang === "ru" ? "ru-RU" : "en-US") : "--";
+        setText("aluminumUpdated", `${t("lastUpdated")}: ${updated}`);
+        setText("aluminumSource", `${t("sourceLabel")}: ${state.aluminum.source || "ALI=F"}`);
+      } else {
+        setText("aluminumUpdated", "--");
+        setText("aluminumSource", "--");
+      }
+
+      drawAluminumChart();
+    }
+
+    function drawAluminumChart() {
+      const canvas = document.getElementById("aluminumChart");
+      if (!canvas) return;
+
+      const context = canvas.getContext("2d");
+      const width = canvas.width;
+      const height = canvas.height;
+      context.clearRect(0, 0, width, height);
+
+      const points = (state.aluminum?.history || [])
+        .filter((item) => Number.isFinite(Number(item.priceUsdPerKg)))
+        .slice(-90);
+
+      context.fillStyle = "rgba(255, 255, 255, .72)";
+      context.font = "24px Segoe UI, Arial, sans-serif";
+
+      if (points.length < 2) {
+        context.fillText(state.lang === "ru" ? "Нет данных графика" : "No chart data", 28, 64);
+        return;
+      }
+
+      const padding = { top: 28, right: 26, bottom: 42, left: 58 };
+      const values = points.map((item) => Number(item.priceUsdPerKg));
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const range = max - min || 1;
+      const plotWidth = width - padding.left - padding.right;
+      const plotHeight = height - padding.top - padding.bottom;
+
+      context.strokeStyle = "rgba(255, 255, 255, .10)";
+      context.lineWidth = 1;
+      for (let i = 0; i <= 4; i += 1) {
+        const y = padding.top + (plotHeight / 4) * i;
+        context.beginPath();
+        context.moveTo(padding.left, y);
+        context.lineTo(width - padding.right, y);
+        context.stroke();
+      }
+
+      context.strokeStyle = "#31d4c7";
+      context.lineWidth = 4;
+      context.beginPath();
+
+      points.forEach((point, index) => {
+        const x = padding.left + (plotWidth * index) / (points.length - 1);
+        const y = padding.top + plotHeight - ((Number(point.priceUsdPerKg) - min) / range) * plotHeight;
+        if (index === 0) context.moveTo(x, y);
+        else context.lineTo(x, y);
+      });
+
+      context.stroke();
+
+      const gradient = context.createLinearGradient(0, padding.top, 0, height - padding.bottom);
+      gradient.addColorStop(0, "rgba(49, 212, 199, .22)");
+      gradient.addColorStop(1, "rgba(49, 212, 199, 0)");
+
+      context.lineTo(width - padding.right, height - padding.bottom);
+      context.lineTo(padding.left, height - padding.bottom);
+      context.closePath();
+      context.fillStyle = gradient;
+      context.fill();
+
+      context.fillStyle = "rgba(255, 255, 255, .70)";
+      context.font = "18px Segoe UI, Arial, sans-serif";
+      context.fillText(formatUsd(max, 4), 12, padding.top + 8);
+      context.fillText(formatUsd(min, 4), 12, height - padding.bottom + 6);
+
+      const firstDate = points[0].date || "";
+      const lastDate = points[points.length - 1].date || "";
+      context.fillStyle = "rgba(174, 184, 197, .92)";
+      context.font = "16px Segoe UI, Arial, sans-serif";
+      context.fillText(firstDate, padding.left, height - 13);
+      const lastWidth = context.measureText(lastDate).width;
+      context.fillText(lastDate, width - padding.right - lastWidth, height - 13);
+    }
+
+    function updateLockerState() {
+      const active = lockerIsActive();
+      const banner = document.getElementById("lockerBanner");
+      const lockButton = document.getElementById("lockButton");
+      const refreshLocksBtn = document.getElementById("refreshLocksBtn");
+
+      if (banner) {
+        banner.classList.toggle("ready", active);
+        banner.innerText = active ? t("lockerReady") : t("lockerPending");
+      }
+
+      if (lockButton) lockButton.disabled = !active;
+      if (refreshLocksBtn) refreshLocksBtn.disabled = !active;
+
+      if (!active) {
+        setStatus(t("lockerNotActive"));
+      }
+    }
+
+    function checkLockerAddress() {
+      if (!lockerIsActive()) {
+        setStatus(t("lockerNotActive"));
+        return false;
+      }
+
+      return true;
     }
 
     async function approveAndLock() {
       try {
         if (!checkLockerAddress()) return;
-        if (!signer) await connectWallet();
+        if (!state.signer) await connectWallet();
 
         const amountInput = document.getElementById("lockAmount").value;
         const daysInput = document.getElementById("lockDays").value;
 
         if (!amountInput || Number(amountInput) <= 0) {
-          setStatus("Enter token amount.");
+          setStatus(t("enterAmount"));
           return;
         }
 
         if (!daysInput || Number(daysInput) < 1) {
-          setStatus("Minimum lock period is 1 day.");
+          setStatus(t("minLock"));
           return;
         }
 
-        const token = new ethers.Contract(TAL13_ADDRESS, tokenAbi, signer);
-        const locker = new ethers.Contract(LOCKER_ADDRESS, lockerAbi, signer);
+        const token = new ethers.Contract(TAL13_ADDRESS, tokenAbi, state.signer);
+        const locker = new ethers.Contract(LOCKER_ADDRESS, lockerAbi, state.signer);
         const decimals = await token.decimals();
         const amount = ethers.parseUnits(amountInput, decimals);
 
@@ -974,7 +1729,7 @@
         await lockTx.wait();
 
         setStatus("Success. Tokens locked.");
-        await loadLocks();
+        await Promise.all([loadLocks(), refreshWalletProfile()]);
       } catch (error) {
         setStatus("Error: " + (error.shortMessage || error.message || error));
       }
@@ -983,12 +1738,17 @@
     async function loadLocks() {
       try {
         if (!checkLockerAddress()) return;
-        if (!signer) await connectWallet();
+        if (!state.signer) await connectWallet();
 
-        const locker = new ethers.Contract(LOCKER_ADDRESS, lockerAbi, signer);
-        const token = new ethers.Contract(TAL13_ADDRESS, tokenAbi, signer);
+        const locker = new ethers.Contract(LOCKER_ADDRESS, lockerAbi, state.signer);
+        const token = new ethers.Contract(TAL13_ADDRESS, tokenAbi, state.signer);
         const decimals = await token.decimals();
-        const locks = await locker.getLocks(user);
+        const locks = await locker.getLocks(state.user);
+
+        if (!locks.length) {
+          document.getElementById("locksTable").innerHTML = `<p class="small">${t("noLocks")}</p>`;
+          return;
+        }
 
         let html = "<table><tr><th>ID</th><th>Amount</th><th>Unlock</th><th>Status</th><th>Action</th></tr>";
         const now = Math.floor(Date.now() / 1000);
@@ -1020,20 +1780,41 @@
     async function withdrawLock(id) {
       try {
         if (!checkLockerAddress()) return;
-        if (!signer) await connectWallet();
+        if (!state.signer) await connectWallet();
 
-        const locker = new ethers.Contract(LOCKER_ADDRESS, lockerAbi, signer);
+        const locker = new ethers.Contract(LOCKER_ADDRESS, lockerAbi, state.signer);
         setStatus("Withdrawing lock #" + id + "...");
         const tx = await locker.withdraw(BigInt(id));
         await tx.wait();
         setStatus("Withdrawn.");
-        await loadLocks();
+        await Promise.all([loadLocks(), refreshWalletProfile()]);
       } catch (error) {
         setStatus("Error: " + (error.shortMessage || error.message || error));
       }
     }
 
-    updateLockerBanner();
+    function init() {
+      state.lang = detectLanguage();
+
+      document.querySelectorAll("[data-lang-button]").forEach((button) => {
+        button.addEventListener("click", () => applyLanguage(button.getAttribute("data-lang-button")));
+      });
+
+      if (window.ethereum) {
+        window.ethereum.on?.("accountsChanged", () => {
+          state.user = null;
+          state.signer = null;
+          state.provider = null;
+          renderWalletProfile();
+        });
+        window.ethereum.on?.("chainChanged", () => window.location.reload());
+      }
+
+      applyLanguage(state.lang);
+      loadMarketData();
+    }
+
+    init();
   </script>
 </body>
 </html>

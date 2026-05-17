@@ -1,0 +1,629 @@
+{
+  "updatedAt": "2026-05-17T20:17:34.045Z",
+  "source": "Yahoo Finance ALI=F / COMEX Aluminum Futures",
+  "unit": "USD per metric ton, converted to USD per kg",
+  "priceUsdPerMetricTon": 3511,
+  "priceUsdPerKg": 3.511,
+  "history": [
+    {
+      "date": "2025-11-17",
+      "priceUsdPerMetricTon": 2732.25,
+      "priceUsdPerKg": 2.73225
+    },
+    {
+      "date": "2025-11-18",
+      "priceUsdPerMetricTon": 2684,
+      "priceUsdPerKg": 2.684
+    },
+    {
+      "date": "2025-11-19",
+      "priceUsdPerMetricTon": 2713.5,
+      "priceUsdPerKg": 2.7135
+    },
+    {
+      "date": "2025-11-20",
+      "priceUsdPerMetricTon": 2728.75,
+      "priceUsdPerKg": 2.72875
+    },
+    {
+      "date": "2025-11-21",
+      "priceUsdPerMetricTon": 2695.25,
+      "priceUsdPerKg": 2.69525
+    },
+    {
+      "date": "2025-11-24",
+      "priceUsdPerMetricTon": 2740.5,
+      "priceUsdPerKg": 2.7405
+    },
+    {
+      "date": "2025-11-25",
+      "priceUsdPerMetricTon": 2725,
+      "priceUsdPerKg": 2.725
+    },
+    {
+      "date": "2025-11-26",
+      "priceUsdPerMetricTon": 2790.25,
+      "priceUsdPerKg": 2.79025
+    },
+    {
+      "date": "2025-11-28",
+      "priceUsdPerMetricTon": 2808,
+      "priceUsdPerKg": 2.808
+    },
+    {
+      "date": "2025-12-01",
+      "priceUsdPerMetricTon": 2843.25,
+      "priceUsdPerKg": 2.84325
+    },
+    {
+      "date": "2025-12-02",
+      "priceUsdPerMetricTon": 2849.75,
+      "priceUsdPerKg": 2.84975
+    },
+    {
+      "date": "2025-12-03",
+      "priceUsdPerMetricTon": 2867.5,
+      "priceUsdPerKg": 2.8675
+    },
+    {
+      "date": "2025-12-04",
+      "priceUsdPerMetricTon": 2877.75,
+      "priceUsdPerKg": 2.87775
+    },
+    {
+      "date": "2025-12-05",
+      "priceUsdPerMetricTon": 2861,
+      "priceUsdPerKg": 2.861
+    },
+    {
+      "date": "2025-12-08",
+      "priceUsdPerMetricTon": 2837.25,
+      "priceUsdPerKg": 2.83725
+    },
+    {
+      "date": "2025-12-09",
+      "priceUsdPerMetricTon": 2796.25,
+      "priceUsdPerKg": 2.79625
+    },
+    {
+      "date": "2025-12-10",
+      "priceUsdPerMetricTon": 2804.5,
+      "priceUsdPerKg": 2.8045
+    },
+    {
+      "date": "2025-12-11",
+      "priceUsdPerMetricTon": 2825,
+      "priceUsdPerKg": 2.825
+    },
+    {
+      "date": "2025-12-12",
+      "priceUsdPerMetricTon": 2788,
+      "priceUsdPerKg": 2.788
+    },
+    {
+      "date": "2025-12-15",
+      "priceUsdPerMetricTon": 2763.5,
+      "priceUsdPerKg": 2.7635
+    },
+    {
+      "date": "2025-12-16",
+      "priceUsdPerMetricTon": 2775.75,
+      "priceUsdPerKg": 2.77575
+    },
+    {
+      "date": "2025-12-17",
+      "priceUsdPerMetricTon": 2816,
+      "priceUsdPerKg": 2.816
+    },
+    {
+      "date": "2025-12-18",
+      "priceUsdPerMetricTon": 2823.75,
+      "priceUsdPerKg": 2.82375
+    },
+    {
+      "date": "2025-12-19",
+      "priceUsdPerMetricTon": 2868,
+      "priceUsdPerKg": 2.868
+    },
+    {
+      "date": "2025-12-22",
+      "priceUsdPerMetricTon": 2850.25,
+      "priceUsdPerKg": 2.85025
+    },
+    {
+      "date": "2025-12-23",
+      "priceUsdPerMetricTon": 2857.5,
+      "priceUsdPerKg": 2.8575
+    },
+    {
+      "date": "2025-12-24",
+      "priceUsdPerMetricTon": 2865.75,
+      "priceUsdPerKg": 2.86575
+    },
+    {
+      "date": "2025-12-26",
+      "priceUsdPerMetricTon": 2924.75,
+      "priceUsdPerKg": 2.92475
+    },
+    {
+      "date": "2025-12-29",
+      "priceUsdPerMetricTon": 2835.5,
+      "priceUsdPerKg": 2.8355
+    },
+    {
+      "date": "2025-12-30",
+      "priceUsdPerMetricTon": 2899.25,
+      "priceUsdPerKg": 2.89925
+    },
+    {
+      "date": "2025-12-31",
+      "priceUsdPerMetricTon": 2906.25,
+      "priceUsdPerKg": 2.90625
+    },
+    {
+      "date": "2026-01-02",
+      "priceUsdPerMetricTon": 2938,
+      "priceUsdPerKg": 2.938
+    },
+    {
+      "date": "2026-01-05",
+      "priceUsdPerMetricTon": 3010,
+      "priceUsdPerKg": 3.01
+    },
+    {
+      "date": "2026-01-06",
+      "priceUsdPerMetricTon": 3053.75,
+      "priceUsdPerKg": 3.05375
+    },
+    {
+      "date": "2026-01-07",
+      "priceUsdPerMetricTon": 2993.75,
+      "priceUsdPerKg": 2.99375
+    },
+    {
+      "date": "2026-01-08",
+      "priceUsdPerMetricTon": 3001.25,
+      "priceUsdPerKg": 3.00125
+    },
+    {
+      "date": "2026-01-09",
+      "priceUsdPerMetricTon": 3037,
+      "priceUsdPerKg": 3.037
+    },
+    {
+      "date": "2026-01-12",
+      "priceUsdPerMetricTon": 3086.25,
+      "priceUsdPerKg": 3.08625
+    },
+    {
+      "date": "2026-01-13",
+      "priceUsdPerMetricTon": 3102.75,
+      "priceUsdPerKg": 3.10275
+    },
+    {
+      "date": "2026-01-14",
+      "priceUsdPerMetricTon": 3086.75,
+      "priceUsdPerKg": 3.08675
+    },
+    {
+      "date": "2026-01-15",
+      "priceUsdPerMetricTon": 3069.5,
+      "priceUsdPerKg": 3.0695
+    },
+    {
+      "date": "2026-01-16",
+      "priceUsdPerMetricTon": 3034.75,
+      "priceUsdPerKg": 3.03475
+    },
+    {
+      "date": "2026-01-20",
+      "priceUsdPerMetricTon": 3015.75,
+      "priceUsdPerKg": 3.01575
+    },
+    {
+      "date": "2026-01-21",
+      "priceUsdPerMetricTon": 3032.25,
+      "priceUsdPerKg": 3.03225
+    },
+    {
+      "date": "2026-01-22",
+      "priceUsdPerMetricTon": 3060.75,
+      "priceUsdPerKg": 3.06075
+    },
+    {
+      "date": "2026-01-23",
+      "priceUsdPerMetricTon": 3097.5,
+      "priceUsdPerKg": 3.0975
+    },
+    {
+      "date": "2026-01-26",
+      "priceUsdPerMetricTon": 3137,
+      "priceUsdPerKg": 3.137
+    },
+    {
+      "date": "2026-01-27",
+      "priceUsdPerMetricTon": 3111.5,
+      "priceUsdPerKg": 3.1115
+    },
+    {
+      "date": "2026-01-28",
+      "priceUsdPerMetricTon": 3165.75,
+      "priceUsdPerKg": 3.16575
+    },
+    {
+      "date": "2026-01-29",
+      "priceUsdPerMetricTon": 3138.5,
+      "priceUsdPerKg": 3.1385
+    },
+    {
+      "date": "2026-01-30",
+      "priceUsdPerMetricTon": 3034.5,
+      "priceUsdPerKg": 3.0345
+    },
+    {
+      "date": "2026-02-02",
+      "priceUsdPerMetricTon": 2926.75,
+      "priceUsdPerKg": 2.92675
+    },
+    {
+      "date": "2026-02-03",
+      "priceUsdPerMetricTon": 3015,
+      "priceUsdPerKg": 3.015
+    },
+    {
+      "date": "2026-02-04",
+      "priceUsdPerMetricTon": 2973.25,
+      "priceUsdPerKg": 2.97325
+    },
+    {
+      "date": "2026-02-05",
+      "priceUsdPerMetricTon": 2925.25,
+      "priceUsdPerKg": 2.92525
+    },
+    {
+      "date": "2026-02-06",
+      "priceUsdPerMetricTon": 3004,
+      "priceUsdPerKg": 3.004
+    },
+    {
+      "date": "2026-02-09",
+      "priceUsdPerMetricTon": 3028.75,
+      "priceUsdPerKg": 3.02875
+    },
+    {
+      "date": "2026-02-10",
+      "priceUsdPerMetricTon": 3001,
+      "priceUsdPerKg": 3.001
+    },
+    {
+      "date": "2026-02-11",
+      "priceUsdPerMetricTon": 3023,
+      "priceUsdPerKg": 3.023
+    },
+    {
+      "date": "2026-02-12",
+      "priceUsdPerMetricTon": 3026.75,
+      "priceUsdPerKg": 3.02675
+    },
+    {
+      "date": "2026-02-13",
+      "priceUsdPerMetricTon": 3015.75,
+      "priceUsdPerKg": 3.01575
+    },
+    {
+      "date": "2026-02-17",
+      "priceUsdPerMetricTon": 2971.5,
+      "priceUsdPerKg": 2.9715
+    },
+    {
+      "date": "2026-02-18",
+      "priceUsdPerMetricTon": 3017,
+      "priceUsdPerKg": 3.017
+    },
+    {
+      "date": "2026-02-19",
+      "priceUsdPerMetricTon": 2992.5,
+      "priceUsdPerKg": 2.9925
+    },
+    {
+      "date": "2026-02-20",
+      "priceUsdPerMetricTon": 3021.75,
+      "priceUsdPerKg": 3.02175
+    },
+    {
+      "date": "2026-02-23",
+      "priceUsdPerMetricTon": 3014.75,
+      "priceUsdPerKg": 3.01475
+    },
+    {
+      "date": "2026-02-24",
+      "priceUsdPerMetricTon": 3020.75,
+      "priceUsdPerKg": 3.02075
+    },
+    {
+      "date": "2026-02-25",
+      "priceUsdPerMetricTon": 3081.75,
+      "priceUsdPerKg": 3.08175
+    },
+    {
+      "date": "2026-02-26",
+      "priceUsdPerMetricTon": 3071.75,
+      "priceUsdPerKg": 3.07175
+    },
+    {
+      "date": "2026-02-27",
+      "priceUsdPerMetricTon": 3044.25,
+      "priceUsdPerKg": 3.04425
+    },
+    {
+      "date": "2026-03-02",
+      "priceUsdPerMetricTon": 3109.25,
+      "priceUsdPerKg": 3.10925
+    },
+    {
+      "date": "2026-03-03",
+      "priceUsdPerMetricTon": 3165.75,
+      "priceUsdPerKg": 3.16575
+    },
+    {
+      "date": "2026-03-04",
+      "priceUsdPerMetricTon": 3279.75,
+      "priceUsdPerKg": 3.27975
+    },
+    {
+      "date": "2026-03-05",
+      "priceUsdPerMetricTon": 3215.75,
+      "priceUsdPerKg": 3.21575
+    },
+    {
+      "date": "2026-03-06",
+      "priceUsdPerMetricTon": 3327.5,
+      "priceUsdPerKg": 3.3275
+    },
+    {
+      "date": "2026-03-09",
+      "priceUsdPerMetricTon": 3292,
+      "priceUsdPerKg": 3.292
+    },
+    {
+      "date": "2026-03-10",
+      "priceUsdPerMetricTon": 3322,
+      "priceUsdPerKg": 3.322
+    },
+    {
+      "date": "2026-03-11",
+      "priceUsdPerMetricTon": 3369.5,
+      "priceUsdPerKg": 3.3695
+    },
+    {
+      "date": "2026-03-12",
+      "priceUsdPerMetricTon": 3464,
+      "priceUsdPerKg": 3.464
+    },
+    {
+      "date": "2026-03-13",
+      "priceUsdPerMetricTon": 3383.25,
+      "priceUsdPerKg": 3.38325
+    },
+    {
+      "date": "2026-03-16",
+      "priceUsdPerMetricTon": 3289.5,
+      "priceUsdPerKg": 3.2895
+    },
+    {
+      "date": "2026-03-17",
+      "priceUsdPerMetricTon": 3291.5,
+      "priceUsdPerKg": 3.2915
+    },
+    {
+      "date": "2026-03-18",
+      "priceUsdPerMetricTon": 3282.25,
+      "priceUsdPerKg": 3.28225
+    },
+    {
+      "date": "2026-03-19",
+      "priceUsdPerMetricTon": 3119.75,
+      "priceUsdPerKg": 3.11975
+    },
+    {
+      "date": "2026-03-20",
+      "priceUsdPerMetricTon": 3102,
+      "priceUsdPerKg": 3.102
+    },
+    {
+      "date": "2026-03-23",
+      "priceUsdPerMetricTon": 3076,
+      "priceUsdPerKg": 3.076
+    },
+    {
+      "date": "2026-03-24",
+      "priceUsdPerMetricTon": 3138,
+      "priceUsdPerKg": 3.138
+    },
+    {
+      "date": "2026-03-25",
+      "priceUsdPerMetricTon": 3135,
+      "priceUsdPerKg": 3.135
+    },
+    {
+      "date": "2026-03-26",
+      "priceUsdPerMetricTon": 3161.5,
+      "priceUsdPerKg": 3.1615
+    },
+    {
+      "date": "2026-03-27",
+      "priceUsdPerMetricTon": 3187.5,
+      "priceUsdPerKg": 3.1875
+    },
+    {
+      "date": "2026-03-30",
+      "priceUsdPerMetricTon": 3336.25,
+      "priceUsdPerKg": 3.33625
+    },
+    {
+      "date": "2026-03-31",
+      "priceUsdPerMetricTon": 3405.5,
+      "priceUsdPerKg": 3.4055
+    },
+    {
+      "date": "2026-04-01",
+      "priceUsdPerMetricTon": 3452.25,
+      "priceUsdPerKg": 3.45225
+    },
+    {
+      "date": "2026-04-02",
+      "priceUsdPerMetricTon": 3411,
+      "priceUsdPerKg": 3.411
+    },
+    {
+      "date": "2026-04-06",
+      "priceUsdPerMetricTon": 3422,
+      "priceUsdPerKg": 3.422
+    },
+    {
+      "date": "2026-04-07",
+      "priceUsdPerMetricTon": 3396.75,
+      "priceUsdPerKg": 3.39675
+    },
+    {
+      "date": "2026-04-08",
+      "priceUsdPerMetricTon": 3374.25,
+      "priceUsdPerKg": 3.37425
+    },
+    {
+      "date": "2026-04-09",
+      "priceUsdPerMetricTon": 3373.75,
+      "priceUsdPerKg": 3.37375
+    },
+    {
+      "date": "2026-04-10",
+      "priceUsdPerMetricTon": 3429.75,
+      "priceUsdPerKg": 3.42975
+    },
+    {
+      "date": "2026-04-13",
+      "priceUsdPerMetricTon": 3582,
+      "priceUsdPerKg": 3.582
+    },
+    {
+      "date": "2026-04-14",
+      "priceUsdPerMetricTon": 3572.75,
+      "priceUsdPerKg": 3.57275
+    },
+    {
+      "date": "2026-04-15",
+      "priceUsdPerMetricTon": 3613.75,
+      "priceUsdPerKg": 3.61375
+    },
+    {
+      "date": "2026-04-16",
+      "priceUsdPerMetricTon": 3647.75,
+      "priceUsdPerKg": 3.64775
+    },
+    {
+      "date": "2026-04-17",
+      "priceUsdPerMetricTon": 3596.75,
+      "priceUsdPerKg": 3.59675
+    },
+    {
+      "date": "2026-04-20",
+      "priceUsdPerMetricTon": 3546,
+      "priceUsdPerKg": 3.546
+    },
+    {
+      "date": "2026-04-21",
+      "priceUsdPerMetricTon": 3555.25,
+      "priceUsdPerKg": 3.55525
+    },
+    {
+      "date": "2026-04-22",
+      "priceUsdPerMetricTon": 3599,
+      "priceUsdPerKg": 3.599
+    },
+    {
+      "date": "2026-04-23",
+      "priceUsdPerMetricTon": 3616.75,
+      "priceUsdPerKg": 3.61675
+    },
+    {
+      "date": "2026-04-24",
+      "priceUsdPerMetricTon": 3607.75,
+      "priceUsdPerKg": 3.60775
+    },
+    {
+      "date": "2026-04-27",
+      "priceUsdPerMetricTon": 3579.75,
+      "priceUsdPerKg": 3.57975
+    },
+    {
+      "date": "2026-04-28",
+      "priceUsdPerMetricTon": 3557.5,
+      "priceUsdPerKg": 3.5575
+    },
+    {
+      "date": "2026-04-29",
+      "priceUsdPerMetricTon": 3466.75,
+      "priceUsdPerKg": 3.46675
+    },
+    {
+      "date": "2026-04-30",
+      "priceUsdPerMetricTon": 3450.5,
+      "priceUsdPerKg": 3.4505
+    },
+    {
+      "date": "2026-05-01",
+      "priceUsdPerMetricTon": 3496.25,
+      "priceUsdPerKg": 3.49625
+    },
+    {
+      "date": "2026-05-04",
+      "priceUsdPerMetricTon": 3489.5,
+      "priceUsdPerKg": 3.4895
+    },
+    {
+      "date": "2026-05-05",
+      "priceUsdPerMetricTon": 3565.25,
+      "priceUsdPerKg": 3.56525
+    },
+    {
+      "date": "2026-05-06",
+      "priceUsdPerMetricTon": 3498,
+      "priceUsdPerKg": 3.498
+    },
+    {
+      "date": "2026-05-07",
+      "priceUsdPerMetricTon": 3480,
+      "priceUsdPerKg": 3.48
+    },
+    {
+      "date": "2026-05-08",
+      "priceUsdPerMetricTon": 3507,
+      "priceUsdPerKg": 3.507
+    },
+    {
+      "date": "2026-05-11",
+      "priceUsdPerMetricTon": 3592.5,
+      "priceUsdPerKg": 3.5925
+    },
+    {
+      "date": "2026-05-12",
+      "priceUsdPerMetricTon": 3652.5,
+      "priceUsdPerKg": 3.6525
+    },
+    {
+      "date": "2026-05-13",
+      "priceUsdPerMetricTon": 3837.75,
+      "priceUsdPerKg": 3.83775
+    },
+    {
+      "date": "2026-05-14",
+      "priceUsdPerMetricTon": 3892,
+      "priceUsdPerKg": 3.892
+    },
+    {
+      "date": "2026-05-15",
+      "priceUsdPerMetricTon": 3511,
+      "priceUsdPerKg": 3.511
+    }
+  ]
+}

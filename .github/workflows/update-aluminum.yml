@@ -1,0 +1,38 @@
+name: Update aluminum data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-aluminum:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Update aluminum JSON
+        run: node scripts/update-aluminum.mjs
+
+      - name: Commit updated data
+        run: |
+          if git diff --quiet -- data/aluminum.json; then
+            echo "No aluminum data changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/aluminum.json
+          git commit -m "Update aluminum price data"
+          git push

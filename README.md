@@ -1,10 +1,14 @@
 # TAL13 Website
 
 Static GitHub Pages website for the TAL13 BEP-20 community token on BNB Chain.
+The site includes a wallet profile, live DEX price lookup, aluminum market reference data, and a prepared token-lock interface.
 
 ## Files
 
 - `index.html` - website
+- `data/aluminum.json` - generated aluminum reference price/history
+- `scripts/update-aluminum.mjs` - updater for aluminum data
+- `.github/workflows/update-aluminum.yml` - scheduled GitHub Action for data refresh
 - `tal13-logo.png` - token logo
 - `TokenLocker.sol` - optional token lock smart contract
 - `README.md` - project notes
@@ -28,6 +32,8 @@ Static GitHub Pages website for the TAL13 BEP-20 community token on BNB Chain.
 
 ## Activate Token Locking
 
+The website is ready for token locking, but lock transactions stay disabled until a TokenLocker contract is deployed.
+
 1. Open Remix.
 2. Create `TokenLocker.sol`.
 3. Paste the code from this repository.
@@ -46,3 +52,14 @@ const LOCKER_ADDRESS = "PASTE_LOCKER_CONTRACT_ADDRESS_HERE";
 10. Commit and push `index.html`.
 
 After that, the lock section will work on the website.
+
+## Aluminum Data
+
+The aluminum reference chart uses COMEX Aluminum Futures (`ALI=F`) data from Yahoo Finance.
+The updater stores prices in USD per metric ton and USD per kilogram:
+
+```bash
+node scripts/update-aluminum.mjs
+```
+
+GitHub Actions also runs the updater on a daily schedule and commits `data/aluminum.json` when the data changes.
