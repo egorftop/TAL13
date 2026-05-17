@@ -1,7 +1,7 @@
 # TAL13 Website
 
 Static GitHub Pages website for the TAL13 BEP-20 community token on BNB Chain.
-The site includes a wallet profile, live DEX price lookup, aluminum market reference data, and a prepared token-lock interface.
+The site includes a wallet profile, live DEX price lookup, aluminum market reference data, and a prepared staking interface with APY tiers.
 
 ## Files
 
@@ -13,6 +13,7 @@ The site includes a wallet profile, live DEX price lookup, aluminum market refer
 - `Tal13.sol` - TAL13 BEP-20 token contract
 - `tal13-logo.png` - token logo
 - `TokenLocker.sol` - TAL13 token lock smart contract
+- `TAL13Staking.sol` - TAL13 staking smart contract with real reward payouts
 - `README.md` - project notes
 
 ## Official TAL13 Contract
@@ -22,6 +23,8 @@ The site includes a wallet profile, live DEX price lookup, aluminum market refer
 ## Deployed TokenLocker Contract
 
 `0xD68143B467DC511Cf9A443AF92331cf2148014aD`
+
+The old TokenLocker is kept on the website as Legacy Locks so existing locks can still be withdrawn after unlock time.
 
 ## Live Site
 
@@ -36,36 +39,41 @@ The site includes a wallet profile, live DEX price lookup, aluminum market refer
 5. Folder: `/root`.
 6. Save and wait for the Pages deployment.
 
-## Activate Token Locking
+## Activate TAL13 Staking
 
-The website is ready for token locking, but lock transactions stay disabled until a TokenLocker contract is deployed.
+The website is ready for staking, but staking transactions stay disabled until a TAL13Staking contract is deployed.
 
 1. Open Remix.
-2. Create `TokenLocker.sol`.
+2. Create `TAL13Staking.sol`.
 3. Paste the code from this repository.
 4. Compile with Solidity `0.8.20` or newer.
 5. Deploy to BNB Smart Chain Mainnet.
 6. Constructor `tokenAddress`:
    `0xb88238565e5b168bc0257b80ce41067b5bf9fee3`
-7. Copy the deployed TokenLocker address.
-8. In `index.html`, find:
+7. Copy the deployed TAL13Staking address and deployment block.
+8. Mint an initial reward pool to the staking contract. Recommended start: `10 TAL13`.
+9. In `index.html`, find:
 
 ```js
-const LOCKER_ADDRESS = "0xD68143B467DC511Cf9A443AF92331cf2148014aD";
+const STAKING_ADDRESS = "PASTE_STAKING_CONTRACT_ADDRESS_HERE";
+const STAKING_DEPLOY_BLOCK = 0;
 ```
 
-9. Replace it with the deployed locker address.
-10. Commit and push `index.html`.
+10. Replace those values with the deployed staking address and deployment block.
+11. Commit and push `index.html`.
 
-After that, the lock section will work on the website.
+After that, the staking section will work on the website.
 
-`TokenLocker.sol` supports:
+`TAL13Staking.sol` supports:
 
-- locking TAL13 from 1 to 3650 days;
-- withdrawing only after unlock time;
-- viewing all locks per wallet;
-- tracking total active locked TAL13;
-- recovering unsupported tokens sent by mistake, but not the locked TAL13 token.
+- staking TAL13 from 30 to 3650 days;
+- APY tiers: 30-89 days = 3%, 90-179 days = 5%, 180-364 days = 6.5%, 365+ days = 8%;
+- reserving rewards at stake time from the contract reward pool;
+- withdrawing principal plus reward only after unlock time;
+- viewing all stakes per wallet;
+- tracking total active principal and reserved rewards;
+- withdrawing only unreserved reward pool TAL13 by the owner;
+- recovering unsupported tokens sent by mistake, but not the TAL13 staking token.
 
 ## Aluminum Data
 

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TAL13 - Wallet, Market And Token Lock</title>
-  <meta name="description" content="TAL13 wallet profile, live DEX price, aluminum market reference and token lock interface on BNB Chain." />
+  <title>TAL13 - Wallet, Market And Staking</title>
+  <meta name="description" content="TAL13 wallet profile, live DEX price, aluminum market reference and staking interface on BNB Chain." />
   <meta property="og:title" content="TAL13" />
   <meta property="og:description" content="Wallet profile, live price and aluminum market reference for TAL13 on BNB Chain." />
   <meta property="og:image" content="./tal13-logo.png" />
@@ -617,6 +617,64 @@
       background: rgba(128, 226, 140, .10);
     }
 
+    .apy-grid,
+    .estimate-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .apy-tier,
+    .estimate-tile {
+      min-height: 76px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(0, 0, 0, .18);
+    }
+
+    .apy-tier span,
+    .estimate-tile span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .apy-tier strong,
+    .estimate-tile strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .tx-log {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .tx-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      max-width: 100%;
+      color: var(--accent);
+      word-break: break-all;
+    }
+
+    .legacy-card {
+      margin-top: 16px;
+    }
+
     label {
       display: block;
       margin: 12px 0 7px;
@@ -661,7 +719,7 @@
 
     table {
       width: 100%;
-      min-width: 560px;
+      min-width: 760px;
       border-collapse: collapse;
       margin-top: 14px;
     }
@@ -816,7 +874,9 @@
 
       .metric-grid,
       .contract-box,
-      .address-row {
+      .address-row,
+      .apy-grid,
+      .estimate-grid {
         grid-template-columns: 1fr;
       }
 
@@ -857,7 +917,7 @@
           <a href="./profile.html" data-i18n="navWallet">Wallet</a>
           <a href="#market" data-i18n="navMarket">Market</a>
           <a href="#contract" data-i18n="navContract">Contract</a>
-          <a href="#locker" data-i18n="navLock">Lock</a>
+          <a href="#locker" data-i18n="navLock">Staking</a>
         </nav>
         <div class="language-switch" aria-label="Language">
           <button class="lang-btn" type="button" data-lang-button="en">EN</button>
@@ -1055,34 +1115,81 @@
 
     <section id="locker" class="shell">
       <div class="section-head">
-        <h2 data-i18n="lockTitle">Token Lock</h2>
-        <p data-i18n="lockLead">Lock TAL13 for a selected number of days after the locker contract is deployed and connected.</p>
+        <h2 data-i18n="stakingTitle">TAL13 Staking</h2>
+        <p data-i18n="stakingLead">Stake TAL13 for 30 days or more and receive real TAL13 rewards from the funded staking pool.</p>
       </div>
 
       <div class="locker-panel">
         <div class="card">
-          <h3 data-i18n="createLock">Create Lock</h3>
-          <div class="status-banner" id="lockerBanner" data-i18n="lockerPending">Locker pending deployment.</div>
+          <h3 data-i18n="createStake">Create Stake</h3>
+          <div class="status-banner" id="stakingBanner" data-i18n="stakingPending">Staking pending deployment.</div>
 
-          <label for="lockAmount" data-i18n="amountTal">Amount TAL13</label>
-          <input id="lockAmount" type="number" min="0" step="0.000000000000000001" placeholder="Example: 10" />
+          <div class="apy-grid" aria-label="TAL13 staking APY tiers">
+            <div class="apy-tier">
+              <span>30-89 days</span>
+              <strong>3% APY</strong>
+            </div>
+            <div class="apy-tier">
+              <span>90-179 days</span>
+              <strong>5% APY</strong>
+            </div>
+            <div class="apy-tier">
+              <span>180-364 days</span>
+              <strong>6.5% APY</strong>
+            </div>
+            <div class="apy-tier">
+              <span>365+ days</span>
+              <strong>8% APY</strong>
+            </div>
+          </div>
 
-          <label for="lockDays" data-i18n="days">Days</label>
-          <input id="lockDays" type="number" min="1" step="1" value="1" />
+          <label for="stakeAmount" data-i18n="amountTal">Amount TAL13</label>
+          <input id="stakeAmount" type="number" min="0" step="0.000000000000000001" placeholder="Example: 10" />
+
+          <label for="stakeDays" data-i18n="days">Days</label>
+          <input id="stakeDays" type="number" min="30" step="1" value="30" />
+
+          <div class="estimate-grid">
+            <div class="estimate-tile">
+              <span data-i18n="estimatedApy">Estimated APY</span>
+              <strong id="stakeApyEstimate">--</strong>
+            </div>
+            <div class="estimate-tile">
+              <span data-i18n="estimatedReward">Estimated Reward</span>
+              <strong id="stakeRewardEstimate">--</strong>
+            </div>
+            <div class="estimate-tile">
+              <span data-i18n="totalClaimable">Total Claimable</span>
+              <strong id="stakeTotalEstimate">--</strong>
+            </div>
+            <div class="estimate-tile">
+              <span data-i18n="rewardPool">Reward Pool</span>
+              <strong id="stakeRewardPool">--</strong>
+            </div>
+          </div>
 
           <div class="actions">
             <button class="btn" type="button" onclick="connectWallet()" data-i18n="connectWallet">Connect Wallet</button>
-            <button class="btn primary" type="button" onclick="approveAndLock()" id="lockButton" disabled data-i18n="approveLock">Approve & Lock</button>
+            <button class="btn primary" type="button" onclick="approveAndStake()" id="stakeButton" disabled data-i18n="approveStake">Approve & Stake</button>
           </div>
           <div id="status" aria-live="polite"></div>
+          <div class="tx-log" id="txLog" aria-live="polite"></div>
         </div>
 
         <div class="card">
-          <h3 data-i18n="yourLocks">Your Locks</h3>
-          <p class="small" id="locksHint" data-i18n="locksPending">Locker contract is not deployed yet. Your locks will appear here after deployment.</p>
-          <button class="btn" type="button" onclick="loadLocks()" id="refreshLocksBtn" disabled data-i18n="refreshLocks">Refresh Locks</button>
-          <div class="table-wrap" id="locksTable"></div>
+          <h3 data-i18n="yourStakes">Your Stakes</h3>
+          <p class="small" id="stakesHint" data-i18n="stakesPending">Staking contract is not deployed yet. Your stakes will appear here after deployment.</p>
+          <button class="btn" type="button" onclick="loadStakes()" id="refreshStakesBtn" disabled data-i18n="refreshStakes">Refresh Stakes</button>
+          <div class="table-wrap" id="stakesTable"></div>
         </div>
+      </div>
+
+      <div class="card legacy-card">
+        <h3 data-i18n="legacyLocksTitle">Legacy Locks</h3>
+        <p class="small" data-i18n="legacyLocksLead">Old TokenLocker locks stay here so already locked TAL13 can be withdrawn after unlock time.</p>
+        <button class="btn" type="button" onclick="loadLegacyLocks()" id="refreshLegacyLocksBtn" data-i18n="refreshLegacyLocks">Refresh Legacy Locks</button>
+        <div class="inline-state" id="legacyStatus" aria-live="polite"></div>
+        <div class="table-wrap" id="legacyLocksTable"></div>
       </div>
     </section>
   </main>
@@ -1097,7 +1204,10 @@
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
   <script>
     const TAL13_ADDRESS = "0xb88238565e5b168bc0257b80ce41067b5bf9fee3";
-    const LOCKER_ADDRESS = "0xD68143B467DC511Cf9A443AF92331cf2148014aD";
+    const STAKING_ADDRESS = "PASTE_STAKING_CONTRACT_ADDRESS_HERE";
+    const STAKING_DEPLOY_BLOCK = 0;
+    const LEGACY_LOCKER_ADDRESS = "0xD68143B467DC511Cf9A443AF92331cf2148014aD";
+    const LEGACY_LOCKER_DEPLOY_BLOCK = 98868122;
     const BSC_CHAIN_ID_HEX = "0x38";
     const BSC_CHAIN_ID_DECIMAL = 56;
     const DEXSCREENER_URL = `https://api.dexscreener.com/token-pairs/v1/bsc/${TAL13_ADDRESS}`;
@@ -1108,7 +1218,7 @@
         navWallet: "Wallet",
         navMarket: "Market",
         navContract: "Contract",
-        navLock: "Lock",
+        navLock: "Staking",
         heroEyebrow: "BEP-20 on BNB Chain",
         heroLead: "Wallet profile, live DEX price and aluminum market reference for the TAL13 community.",
         openProfile: "Open Profile",
@@ -1156,17 +1266,24 @@
         openMarket: "Open market page",
         inspectToken: "Inspect token activity",
         joinChannel: "Join official channel",
-        lockTitle: "Token Lock",
-        lockLead: "Lock TAL13 for a selected number of days after the locker contract is deployed and connected.",
-        createLock: "Create Lock",
-        lockerPending: "Locker pending deployment.",
-        lockerReady: "Locker contract connected.",
+        stakingTitle: "TAL13 Staking",
+        stakingLead: "Stake TAL13 for 30 days or more and receive real TAL13 rewards from the funded staking pool.",
+        createStake: "Create Stake",
+        stakingPending: "Staking pending deployment.",
+        stakingReady: "Staking contract connected.",
         amountTal: "Amount TAL13",
         days: "Days",
-        approveLock: "Approve & Lock",
-        yourLocks: "Your Locks",
-        locksPending: "Locker contract is not deployed yet. Your locks will appear here after deployment.",
-        refreshLocks: "Refresh Locks",
+        approveStake: "Approve & Stake",
+        estimatedApy: "Estimated APY",
+        estimatedReward: "Estimated Reward",
+        totalClaimable: "Total Claimable",
+        rewardPool: "Reward Pool",
+        yourStakes: "Your Stakes",
+        stakesPending: "Staking contract is not deployed yet. Your stakes will appear here after deployment.",
+        refreshStakes: "Refresh Stakes",
+        legacyLocksTitle: "Legacy Locks",
+        legacyLocksLead: "Old TokenLocker locks stay here so already locked TAL13 can be withdrawn after unlock time.",
+        refreshLegacyLocks: "Refresh Legacy Locks",
         footerText: "© TAL13. Community token on BNB Chain.",
         walletMissing: "MetaMask or OKX Wallet not found.",
         walletConnecting: "Connecting wallet...",
@@ -1174,9 +1291,21 @@
         walletReady: "Wallet profile updated.",
         walletRejected: "Wallet connection was rejected.",
         enterAmount: "Enter token amount.",
-        minLock: "Minimum lock period is 1 day.",
-        lockerNotActive: "Locker is pending deployment. Add the deployed TokenLocker address to index.html to activate locking.",
-        noLocks: "No locks found.",
+        minStake: "Minimum staking period is 30 days.",
+        stakingNotActive: "Staking is pending deployment. Add the deployed TAL13Staking address to index.html to activate staking.",
+        noStakes: "No stakes found.",
+        noLegacyLocks: "No legacy locks found.",
+        approvingTal: "Approving TAL13...",
+        stakingTal: "Staking TAL13...",
+        stakeSuccess: "Success. TAL13 staked.",
+        withdrawSuccess: "Withdrawn.",
+        approveTx: "Approve tx",
+        stakeTx: "Stake tx",
+        withdrawTx: "Withdraw tx",
+        viewBscScan: "View on BscScan",
+        ready: "Ready",
+        locked: "Locked",
+        withdrawn: "Withdrawn",
         tokenPriceUnavailable: "TAL13 price unavailable",
         aluminumUnavailable: "Aluminum data unavailable",
         sourceLabel: "Source",
@@ -1258,6 +1387,38 @@
         noLocks: "Локи не найдены.",
         tokenPriceUnavailable: "Цена TAL13 недоступна",
         aluminumUnavailable: "Данные алюминия недоступны",
+        navLock: "Стейкинг",
+        stakingTitle: "TAL13 Стейкинг",
+        stakingLead: "Стейкай TAL13 на 30 дней или больше и получай реальные награды TAL13 из пополненного reward pool.",
+        createStake: "Создать стейк",
+        stakingPending: "Staking-контракт ожидает деплоя.",
+        stakingReady: "Staking-контракт подключен.",
+        approveStake: "Approve & Stake",
+        estimatedApy: "Расчетный APY",
+        estimatedReward: "Расчетная награда",
+        totalClaimable: "Всего к получению",
+        rewardPool: "Reward pool",
+        yourStakes: "Твои стейки",
+        stakesPending: "Staking-контракт еще не развернут. После деплоя твои стейки появятся здесь.",
+        refreshStakes: "Обновить стейки",
+        legacyLocksTitle: "Старые локи",
+        legacyLocksLead: "Старый TokenLocker остается здесь, чтобы уже залоченные TAL13 можно было вывести после unlock.",
+        refreshLegacyLocks: "Обновить старые локи",
+        minStake: "Минимальный срок стейкинга - 30 дней.",
+        stakingNotActive: "Staking ожидает деплоя. Добавь адрес TAL13Staking в index.html, чтобы включить стейкинг.",
+        noStakes: "Стейки не найдены.",
+        noLegacyLocks: "Старые локи не найдены.",
+        approvingTal: "Подтверждаю TAL13...",
+        stakingTal: "Отправляю TAL13 в стейкинг...",
+        stakeSuccess: "Готово. TAL13 застейканы.",
+        withdrawSuccess: "Выведено.",
+        approveTx: "Approve tx",
+        stakeTx: "Stake tx",
+        withdrawTx: "Withdraw tx",
+        viewBscScan: "Открыть в BscScan",
+        ready: "Готово",
+        locked: "Залочено",
+        withdrawn: "Выведено",
         sourceLabel: "Источник",
         lastUpdated: "Обновлено"
       }
@@ -1270,8 +1431,17 @@
       "function balanceOf(address account) external view returns (uint256)"
     ];
 
-    const lockerAbi = [
-      "function lock(uint256 amount,uint256 daysCount) external",
+    const stakingAbi = [
+      "event Staked(address indexed user,uint256 indexed stakeId,uint256 amount,uint256 unlockTime,uint256 daysCount,uint16 apyBps,uint256 reward)",
+      "function stake(uint256 amount,uint256 daysCount) external",
+      "function withdraw(uint256 stakeId) external",
+      "function getStakes(address user) external view returns (tuple(uint256 amount,uint256 startTime,uint256 unlockTime,uint16 apyBps,uint256 reward,bool withdrawn)[])",
+      "function rewardPoolAvailable() external view returns (uint256)",
+      "function calculateReward(uint256 amount,uint256 daysCount) external pure returns (uint256)"
+    ];
+
+    const legacyLockerAbi = [
+      "event Locked(address indexed user,uint256 indexed lockId,uint256 amount,uint256 unlockTime,uint256 daysCount)",
       "function withdraw(uint256 lockId) external",
       "function getLocks(address user) external view returns (tuple(uint256 amount,uint256 unlockTime,bool withdrawn)[])"
     ];
@@ -1330,8 +1500,12 @@
       return address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "--";
     }
 
-    function lockerIsActive() {
-      return LOCKER_ADDRESS && !LOCKER_ADDRESS.includes("PASTE_");
+    function stakingIsActive() {
+      return STAKING_ADDRESS && !STAKING_ADDRESS.includes("PASTE_");
+    }
+
+    function legacyLockerIsActive() {
+      return LEGACY_LOCKER_ADDRESS && !LEGACY_LOCKER_ADDRESS.includes("PASTE_");
     }
 
     function detectLanguage() {
@@ -1356,7 +1530,8 @@
 
       renderMarket();
       renderWalletProfile();
-      updateLockerState();
+      updateStakingState();
+      updateStakeEstimate();
     }
 
     async function copyText(value, stateElementId) {
@@ -1443,6 +1618,11 @@
         state.user = await state.signer.getAddress();
 
         await refreshWalletProfile();
+        await Promise.all([
+          updateRewardPool(),
+          stakingIsActive() ? loadStakes() : Promise.resolve(),
+          legacyLockerIsActive() ? loadLegacyLocks() : Promise.resolve()
+        ]);
       } catch (error) {
         const message = error && (error.code === 4001 || error.code === "ACTION_REJECTED")
           ? t("walletRejected")
@@ -1671,88 +1851,317 @@
       context.fillText(lastDate, width - padding.right - lastWidth, height - 13);
     }
 
-    function updateLockerState() {
-      const active = lockerIsActive();
-      const banner = document.getElementById("lockerBanner");
-      const lockButton = document.getElementById("lockButton");
-      const refreshLocksBtn = document.getElementById("refreshLocksBtn");
+    function getReadProvider() {
+      return state.provider || new ethers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
+    }
 
-      if (banner) {
-        banner.classList.toggle("ready", active);
-        banner.innerText = active ? t("lockerReady") : t("lockerPending");
+    function bscscanTxUrl(hash) {
+      return `https://bscscan.com/tx/${hash}`;
+    }
+
+    function shortHash(hash) {
+      return hash ? `${hash.slice(0, 10)}...${hash.slice(-8)}` : "--";
+    }
+
+    function txHashLink(label, hash) {
+      if (!hash) return "--";
+      const prefix = label ? `${label}: ` : "";
+      return `${prefix}<a class="tx-link" href="${bscscanTxUrl(hash)}" target="_blank" rel="noopener noreferrer">${shortHash(hash)} - ${t("viewBscScan")}</a>`;
+    }
+
+    function setTxLog(items) {
+      const txLog = document.getElementById("txLog");
+      if (!txLog) return;
+      txLog.innerHTML = items.length ? items.map((item) => `<div>${txHashLink(item.label, item.hash)}</div>`).join("") : "";
+    }
+
+    function setLegacyStatusHtml(html) {
+      const legacyStatus = document.getElementById("legacyStatus");
+      if (legacyStatus) legacyStatus.innerHTML = html;
+    }
+
+    function apyBpsForDays(daysCount) {
+      if (daysCount < 90) return 300;
+      if (daysCount < 180) return 500;
+      if (daysCount < 365) return 650;
+      return 800;
+    }
+
+    function formatApy(apyBps) {
+      return `${formatNumber(apyBps / 100, 2)}%`;
+    }
+
+    function estimateReward(amount, daysCount) {
+      if (!Number.isFinite(amount) || !Number.isFinite(daysCount) || amount <= 0 || daysCount < 30) {
+        return null;
       }
 
-      if (lockButton) lockButton.disabled = !active;
-      if (refreshLocksBtn) refreshLocksBtn.disabled = !active;
+      return (amount * apyBpsForDays(daysCount) * daysCount) / (365 * 10000);
+    }
 
-      if (!active) {
-        setStatus(t("lockerNotActive"));
+    function updateStakeEstimate() {
+      const amount = Number(document.getElementById("stakeAmount")?.value || 0);
+      const daysCount = Number(document.getElementById("stakeDays")?.value || 0);
+      const validDays = Number.isFinite(daysCount) && daysCount >= 30;
+      const apyBps = validDays ? apyBpsForDays(daysCount) : null;
+      const reward = estimateReward(amount, daysCount);
+      const total = reward === null ? null : amount + reward;
+      const stakeButton = document.getElementById("stakeButton");
+
+      setText("stakeApyEstimate", apyBps === null ? "--" : formatApy(apyBps));
+      setText("stakeRewardEstimate", reward === null ? "--" : `${formatNumber(reward, 8)} TAL13`);
+      setText("stakeTotalEstimate", total === null ? "--" : `${formatNumber(total, 8)} TAL13`);
+
+      if (stakeButton) {
+        stakeButton.disabled = !stakingIsActive() || !validDays;
       }
     }
 
-    function checkLockerAddress() {
-      if (!lockerIsActive()) {
-        setStatus(t("lockerNotActive"));
+    async function updateRewardPool() {
+      if (!stakingIsActive()) {
+        setText("stakeRewardPool", "--");
+        return;
+      }
+
+      try {
+        const staking = new ethers.Contract(STAKING_ADDRESS, stakingAbi, getReadProvider());
+        const token = new ethers.Contract(TAL13_ADDRESS, tokenAbi, getReadProvider());
+        const [decimals, poolRaw] = await Promise.all([
+          token.decimals(),
+          staking.rewardPoolAvailable()
+        ]);
+        setText("stakeRewardPool", `${formatNumber(Number(ethers.formatUnits(poolRaw, decimals)), 6)} TAL13`);
+      } catch (error) {
+        setText("stakeRewardPool", "--");
+      }
+    }
+
+    function updateStakingState() {
+      const active = stakingIsActive();
+      const banner = document.getElementById("stakingBanner");
+      const refreshStakesBtn = document.getElementById("refreshStakesBtn");
+
+      if (banner) {
+        banner.classList.toggle("ready", active);
+        banner.innerText = active ? t("stakingReady") : t("stakingPending");
+      }
+
+      if (refreshStakesBtn) refreshStakesBtn.disabled = !active;
+
+      if (!active) {
+        setStatus(t("stakingNotActive"));
+      }
+
+      updateStakeEstimate();
+      void updateRewardPool();
+    }
+
+    function checkStakingAddress() {
+      if (!stakingIsActive()) {
+        setStatus(t("stakingNotActive"));
         return false;
       }
 
       return true;
     }
 
-    async function approveAndLock() {
+    async function approveAndStake() {
       try {
-        if (!checkLockerAddress()) return;
+        if (!checkStakingAddress()) return;
         if (!state.signer) await connectWallet();
+        if (!state.signer) return;
 
-        const amountInput = document.getElementById("lockAmount").value;
-        const daysInput = document.getElementById("lockDays").value;
+        const amountInput = document.getElementById("stakeAmount").value;
+        const daysInput = document.getElementById("stakeDays").value;
 
         if (!amountInput || Number(amountInput) <= 0) {
           setStatus(t("enterAmount"));
           return;
         }
 
-        if (!daysInput || Number(daysInput) < 1) {
-          setStatus(t("minLock"));
+        if (!daysInput || Number(daysInput) < 30) {
+          setStatus(t("minStake"));
           return;
         }
 
+        setTxLog([]);
+
         const token = new ethers.Contract(TAL13_ADDRESS, tokenAbi, state.signer);
-        const locker = new ethers.Contract(LOCKER_ADDRESS, lockerAbi, state.signer);
+        const staking = new ethers.Contract(STAKING_ADDRESS, stakingAbi, state.signer);
         const decimals = await token.decimals();
         const amount = ethers.parseUnits(amountInput, decimals);
+        const txItems = [];
 
-        setStatus("Approving TAL13...");
-        const approveTx = await token.approve(LOCKER_ADDRESS, amount);
+        setStatus(t("approvingTal"));
+        const approveTx = await token.approve(STAKING_ADDRESS, amount);
+        txItems.push({ label: t("approveTx"), hash: approveTx.hash });
+        setTxLog(txItems);
         await approveTx.wait();
 
-        setStatus("Locking TAL13...");
-        const lockTx = await locker.lock(amount, BigInt(daysInput));
-        await lockTx.wait();
+        setStatus(t("stakingTal"));
+        const stakeTx = await staking.stake(amount, BigInt(daysInput));
+        txItems.push({ label: t("stakeTx"), hash: stakeTx.hash });
+        setTxLog(txItems);
+        await stakeTx.wait();
 
-        setStatus("Success. Tokens locked.");
-        await Promise.all([loadLocks(), refreshWalletProfile()]);
+        setStatus(t("stakeSuccess"));
+        await Promise.all([loadStakes(), refreshWalletProfile(), updateRewardPool()]);
       } catch (error) {
         setStatus("Error: " + (error.shortMessage || error.message || error));
       }
     }
 
-    async function loadLocks() {
-      try {
-        if (!checkLockerAddress()) return;
-        if (!state.signer) await connectWallet();
+    async function loadStakeTxHashes(count) {
+      const hashes = {};
+      if (!state.provider || !state.user || !stakingIsActive() || !STAKING_DEPLOY_BLOCK) {
+        return hashes;
+      }
 
-        const locker = new ethers.Contract(LOCKER_ADDRESS, lockerAbi, state.signer);
+      try {
+        const iface = new ethers.Interface(stakingAbi);
+        const logs = await state.provider.getLogs({
+          address: STAKING_ADDRESS,
+          fromBlock: STAKING_DEPLOY_BLOCK,
+          toBlock: "latest",
+          topics: [
+            ethers.id("Staked(address,uint256,uint256,uint256,uint256,uint16,uint256)"),
+            ethers.zeroPadValue(state.user, 32)
+          ]
+        });
+
+        logs.forEach((log) => {
+          const parsed = iface.parseLog(log);
+          const stakeId = Number(parsed.args.stakeId);
+          if (stakeId >= 0 && stakeId < count) {
+            hashes[stakeId] = log.transactionHash;
+          }
+        });
+      } catch (error) {
+        return hashes;
+      }
+
+      return hashes;
+    }
+
+    async function loadStakes() {
+      try {
+        if (!checkStakingAddress()) return;
+        if (!state.signer) await connectWallet();
+        if (!state.signer) return;
+
+        const staking = new ethers.Contract(STAKING_ADDRESS, stakingAbi, state.signer);
         const token = new ethers.Contract(TAL13_ADDRESS, tokenAbi, state.signer);
         const decimals = await token.decimals();
-        const locks = await locker.getLocks(state.user);
+        const stakes = await staking.getStakes(state.user);
+        const table = document.getElementById("stakesTable");
 
-        if (!locks.length) {
-          document.getElementById("locksTable").innerHTML = `<p class="small">${t("noLocks")}</p>`;
+        if (!stakes.length) {
+          table.innerHTML = `<p class="small">${t("noStakes")}</p>`;
           return;
         }
 
-        let html = "<table><tr><th>ID</th><th>Amount</th><th>Unlock</th><th>Status</th><th>Action</th></tr>";
+        const txHashes = await loadStakeTxHashes(stakes.length);
+        let html = "<table><tr><th>ID</th><th>Amount</th><th>APY</th><th>Reward</th><th>Unlock</th><th>Status</th><th>Stake TX</th><th>Action</th></tr>";
+        const now = Math.floor(Date.now() / 1000);
+
+        stakes.forEach((stake, index) => {
+          const amount = ethers.formatUnits(stake.amount, decimals);
+          const reward = ethers.formatUnits(stake.reward, decimals);
+          const unlockTime = Number(stake.unlockTime);
+          const date = new Date(unlockTime * 1000).toLocaleString();
+          const canWithdraw = !stake.withdrawn && now >= unlockTime;
+          const status = stake.withdrawn ? t("withdrawn") : canWithdraw ? t("ready") : t("locked");
+          const action = canWithdraw ? `<button class="btn" type="button" onclick="withdrawStake(${index})">Withdraw</button>` : "-";
+          const txLink = txHashes[index] ? txHashLink("", txHashes[index]) : "--";
+
+          html += `<tr>
+            <td>${index}</td>
+            <td>${amount}</td>
+            <td>${formatApy(Number(stake.apyBps))}</td>
+            <td>${reward}</td>
+            <td>${date}</td>
+            <td>${status}</td>
+            <td>${txLink}</td>
+            <td>${action}</td>
+          </tr>`;
+        });
+
+        html += "</table>";
+        table.innerHTML = html;
+      } catch (error) {
+        setStatus("Error: " + (error.shortMessage || error.message || error));
+      }
+    }
+
+    async function withdrawStake(id) {
+      try {
+        if (!checkStakingAddress()) return;
+        if (!state.signer) await connectWallet();
+        if (!state.signer) return;
+
+        const staking = new ethers.Contract(STAKING_ADDRESS, stakingAbi, state.signer);
+        setStatus("Withdrawing stake #" + id + "...");
+        const tx = await staking.withdraw(BigInt(id));
+        setTxLog([{ label: t("withdrawTx"), hash: tx.hash }]);
+        await tx.wait();
+        setStatus(t("withdrawSuccess"));
+        await Promise.all([loadStakes(), refreshWalletProfile(), updateRewardPool()]);
+      } catch (error) {
+        setStatus("Error: " + (error.shortMessage || error.message || error));
+      }
+    }
+
+    async function loadLegacyLockTxHashes(count) {
+      const hashes = {};
+      if (!state.provider || !state.user || !legacyLockerIsActive() || !LEGACY_LOCKER_DEPLOY_BLOCK) {
+        return hashes;
+      }
+
+      try {
+        const iface = new ethers.Interface(legacyLockerAbi);
+        const logs = await state.provider.getLogs({
+          address: LEGACY_LOCKER_ADDRESS,
+          fromBlock: LEGACY_LOCKER_DEPLOY_BLOCK,
+          toBlock: "latest",
+          topics: [
+            ethers.id("Locked(address,uint256,uint256,uint256,uint256)"),
+            ethers.zeroPadValue(state.user, 32)
+          ]
+        });
+
+        logs.forEach((log) => {
+          const parsed = iface.parseLog(log);
+          const lockId = Number(parsed.args.lockId);
+          if (lockId >= 0 && lockId < count) {
+            hashes[lockId] = log.transactionHash;
+          }
+        });
+      } catch (error) {
+        return hashes;
+      }
+
+      return hashes;
+    }
+
+    async function loadLegacyLocks() {
+      try {
+        if (!legacyLockerIsActive()) return;
+        if (!state.signer) await connectWallet();
+        if (!state.signer) return;
+
+        const locker = new ethers.Contract(LEGACY_LOCKER_ADDRESS, legacyLockerAbi, state.signer);
+        const token = new ethers.Contract(TAL13_ADDRESS, tokenAbi, state.signer);
+        const decimals = await token.decimals();
+        const locks = await locker.getLocks(state.user);
+        const table = document.getElementById("legacyLocksTable");
+
+        if (!locks.length) {
+          table.innerHTML = `<p class="small">${t("noLegacyLocks")}</p>`;
+          return;
+        }
+
+        const txHashes = await loadLegacyLockTxHashes(locks.length);
+        let html = "<table><tr><th>ID</th><th>Amount</th><th>Unlock</th><th>Status</th><th>Lock TX</th><th>Action</th></tr>";
         const now = Math.floor(Date.now() / 1000);
 
         locks.forEach((lock, index) => {
@@ -1760,38 +2169,44 @@
           const unlockTime = Number(lock.unlockTime);
           const date = new Date(unlockTime * 1000).toLocaleString();
           const canWithdraw = !lock.withdrawn && now >= unlockTime;
-          const status = lock.withdrawn ? "Withdrawn" : canWithdraw ? "Ready" : "Locked";
-          const action = canWithdraw ? `<button class="btn" type="button" onclick="withdrawLock(${index})">Withdraw</button>` : "-";
+          const status = lock.withdrawn ? t("withdrawn") : canWithdraw ? t("ready") : t("locked");
+          const action = canWithdraw ? `<button class="btn" type="button" onclick="withdrawLegacyLock(${index})">Withdraw</button>` : "-";
+          const txLink = txHashes[index] ? txHashLink("", txHashes[index]) : "--";
 
           html += `<tr>
             <td>${index}</td>
             <td>${amount}</td>
             <td>${date}</td>
             <td>${status}</td>
+            <td>${txLink}</td>
             <td>${action}</td>
           </tr>`;
         });
 
         html += "</table>";
-        document.getElementById("locksTable").innerHTML = html;
+        table.innerHTML = html;
+        setLegacyStatusHtml("");
       } catch (error) {
-        setStatus("Error: " + (error.shortMessage || error.message || error));
+        setLegacyStatusHtml("Error: " + (error.shortMessage || error.message || error));
       }
     }
 
-    async function withdrawLock(id) {
+    async function withdrawLegacyLock(id) {
       try {
-        if (!checkLockerAddress()) return;
+        if (!legacyLockerIsActive()) return;
         if (!state.signer) await connectWallet();
+        if (!state.signer) return;
 
-        const locker = new ethers.Contract(LOCKER_ADDRESS, lockerAbi, state.signer);
-        setStatus("Withdrawing lock #" + id + "...");
+        const locker = new ethers.Contract(LEGACY_LOCKER_ADDRESS, legacyLockerAbi, state.signer);
+        setLegacyStatusHtml("Withdrawing legacy lock #" + id + "...");
         const tx = await locker.withdraw(BigInt(id));
+        setLegacyStatusHtml(txHashLink(t("withdrawTx"), tx.hash));
+        setTxLog([{ label: t("withdrawTx"), hash: tx.hash }]);
         await tx.wait();
-        setStatus("Withdrawn.");
-        await Promise.all([loadLocks(), refreshWalletProfile()]);
+        setLegacyStatusHtml(t("withdrawSuccess"));
+        await Promise.all([loadLegacyLocks(), refreshWalletProfile()]);
       } catch (error) {
-        setStatus("Error: " + (error.shortMessage || error.message || error));
+        setLegacyStatusHtml("Error: " + (error.shortMessage || error.message || error));
       }
     }
 
@@ -1802,12 +2217,18 @@
         button.addEventListener("click", () => applyLanguage(button.getAttribute("data-lang-button")));
       });
 
+      ["stakeAmount", "stakeDays"].forEach((id) => {
+        document.getElementById(id)?.addEventListener("input", updateStakeEstimate);
+      });
+
       if (window.ethereum) {
         window.ethereum.on?.("accountsChanged", () => {
           state.user = null;
           state.signer = null;
           state.provider = null;
           renderWalletProfile();
+          document.getElementById("stakesTable").innerHTML = "";
+          document.getElementById("legacyLocksTable").innerHTML = "";
         });
         window.ethereum.on?.("chainChanged", () => window.location.reload());
       }
