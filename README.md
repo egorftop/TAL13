@@ -12,7 +12,7 @@ The site includes a wallet profile, live DEX price lookup, aluminum market refer
 - `.github/workflows/update-aluminum.yml` - scheduled GitHub Action for data refresh
 - `Tal13.sol` - TAL13 BEP-20 token contract
 - `tal13-logo.png` - token logo
-- `TokenLocker.sol` - optional token lock smart contract
+- `TokenLocker.sol` - TAL13 token lock smart contract
 - `README.md` - project notes
 
 ## Official TAL13 Contract
@@ -54,6 +54,14 @@ const LOCKER_ADDRESS = "PASTE_LOCKER_CONTRACT_ADDRESS_HERE";
 10. Commit and push `index.html`.
 
 After that, the lock section will work on the website.
+
+`TokenLocker.sol` supports:
+
+- locking TAL13 from 1 to 3650 days;
+- withdrawing only after unlock time;
+- viewing all locks per wallet;
+- tracking total active locked TAL13;
+- recovering unsupported tokens sent by mistake, but not the locked TAL13 token.
 
 ## Aluminum Data
 
