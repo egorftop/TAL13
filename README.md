@@ -19,6 +19,10 @@ The site includes a wallet profile, live DEX price lookup, aluminum market refer
 
 `0xb88238565e5b168bc0257b80ce41067b5bf9fee3`
 
+## Deployed TokenLocker Contract
+
+`0xD68143B467DC511Cf9A443AF92331cf2148014aD`
+
 ## Live Site
 
 `https://egorftop.github.io/TAL13/`
@@ -47,7 +51,7 @@ The website is ready for token locking, but lock transactions stay disabled unti
 8. In `index.html`, find:
 
 ```js
-const LOCKER_ADDRESS = "PASTE_LOCKER_CONTRACT_ADDRESS_HERE";
+const LOCKER_ADDRESS = "0xD68143B467DC511Cf9A443AF92331cf2148014aD";
 ```
 
 9. Replace it with the deployed locker address.
