@@ -1,59 +1,48 @@
-# TAL13 website
+# TAL13 Website
 
-This is a static TAL13 website for GitHub Pages.
+Static GitHub Pages website for the TAL13 BEP-20 community token on BNB Chain.
 
 ## Files
 
-- `index.html` — website
-- `tal13-logo.png` — token logo
-- `TokenLocker.sol` — optional token lock smart contract
+- `index.html` - website
+- `tal13-logo.png` - token logo
+- `TokenLocker.sol` - optional token lock smart contract
+- `README.md` - project notes
 
-## Official TAL13 contract
+## Official TAL13 Contract
 
 `0xb88238565e5b168bc0257b80ce41067b5bf9fee3`
 
-## How to publish on GitHub Pages
+## Live Site
 
-1. Go to https://github.com
-2. Create a new public repository named `tal13`
-3. Upload all files from this folder:
-   - index.html
-   - tal13-logo.png
-   - TokenLocker.sol
-   - README.md
-4. Open repository Settings
-5. Go to Pages
-6. Source: Deploy from a branch
-7. Branch: main
-8. Folder: /root
-9. Save
-10. Wait 1–5 minutes
+`https://egorftop.github.io/TAL13/`
 
-Your website will be:
+## Publish On GitHub Pages
 
-`https://YOUR-GITHUB-USERNAME.github.io/tal13/`
+1. Open repository settings on GitHub.
+2. Go to Pages.
+3. Source: Deploy from a branch.
+4. Branch: `main`.
+5. Folder: `/root`.
+6. Save and wait for the Pages deployment.
 
-## How to activate token locking
+## Activate Token Locking
 
 1. Open Remix.
 2. Create `TokenLocker.sol`.
-3. Paste the code from `TokenLocker.sol`.
+3. Paste the code from this repository.
 4. Compile with Solidity `0.8.20` or newer.
 5. Deploy to BNB Smart Chain Mainnet.
-6. Constructor tokenAddress:
+6. Constructor `tokenAddress`:
    `0xb88238565e5b168bc0257b80ce41067b5bf9fee3`
-7. Copy deployed TokenLocker address.
+7. Copy the deployed TokenLocker address.
 8. In `index.html`, find:
 
 ```js
 const LOCKER_ADDRESS = "PASTE_LOCKER_CONTRACT_ADDRESS_HERE";
 ```
 
-9. Replace it with your deployed locker address.
-10. Commit/update `index.html` on GitHub.
+9. Replace it with the deployed locker address.
+10. Commit and push `index.html`.
 
 After that, the lock section will work on the website.
-
-## Important
-
-TAL13 is not backed by physical aluminum and is not redeemable for metal.

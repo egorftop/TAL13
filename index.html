@@ -3,222 +3,844 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TAL13 — Aluminum Inspired Token</title>
-  <meta name="description" content="TAL13 is a BEP-20 community token on BNB Chain inspired by aluminum, atomic number 13." />
+  <title>TAL13 - BNB Chain Community Token</title>
+  <meta name="description" content="TAL13 is a BEP-20 community token on BNB Chain inspired by aluminum and atomic number 13." />
+  <meta property="og:title" content="TAL13" />
+  <meta property="og:description" content="A clean BEP-20 community token experience on BNB Chain." />
+  <meta property="og:image" content="./tal13-logo.png" />
+  <meta property="og:type" content="website" />
   <link rel="icon" href="./tal13-logo.png" />
   <style>
     :root {
-      --bg: #071a35;
-      --bg2: #0d2b56;
-      --card: rgba(255,255,255,.08);
-      --line: rgba(255,255,255,.16);
-      --text: #ffffff;
-      --muted: #bcd0e8;
-      --accent: #25d6d0;
-      --accent2: #ffffff;
-      --warn: #ffd36a;
-      --danger: #ff8c8c;
-      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --bg: #080a0d;
+      --bg-soft: #10151b;
+      --panel: rgba(255, 255, 255, .072);
+      --panel-strong: rgba(255, 255, 255, .11);
+      --line: rgba(255, 255, 255, .15);
+      --text: #f7f9fb;
+      --muted: #aeb8c5;
+      --soft: #dce4ee;
+      --accent: #31d4c7;
+      --accent-dark: #06231f;
+      --amber: #f2bd57;
+      --green: #80e28c;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .34);
+      --radius: 8px;
+      --max: 1160px;
     }
-    * { box-sizing: border-box; }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: radial-gradient(circle at top right, #1f4d83 0, var(--bg) 45%, #030914 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       color: var(--text);
-      line-height: 1.6;
+      background:
+        linear-gradient(135deg, rgba(49, 212, 199, .08), transparent 26%),
+        linear-gradient(180deg, #111820 0, var(--bg) 46%, #090b0e 100%);
+      line-height: 1.55;
+      overflow-x: hidden;
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .wrap { max-width: 1120px; margin: 0 auto; padding: 24px; }
-    header {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 20px; padding: 18px 0;
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image:
+        linear-gradient(115deg, transparent 0 18%, rgba(255, 255, 255, .08) 19%, transparent 20% 38%, rgba(255, 255, 255, .06) 39%, transparent 40% 100%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .04) 0 1px, transparent 1px 24px);
+      mix-blend-mode: screen;
     }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .5px; }
-    .brand img { width: 52px; height: 52px; border-radius: 12px; box-shadow: var(--shadow); }
-    nav { display: flex; gap: 16px; flex-wrap: wrap; }
-    nav a { color: var(--text); opacity: .85; font-weight: 700; font-size: 14px; }
-    .hero {
-      display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center;
-      padding: 56px 0 34px;
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
-    .badge {
-      display: inline-block; padding: 8px 12px; border: 1px solid var(--line);
-      border-radius: 999px; background: rgba(255,255,255,.06); color: var(--muted);
-      font-size: 14px; font-weight: 700;
+
+    a:hover {
+      color: var(--accent);
     }
-    h1 { font-size: clamp(44px, 7vw, 86px); line-height: .95; margin: 18px 0; }
-    h2 { font-size: 30px; margin: 0 0 12px; }
-    p { color: var(--muted); }
-    .hero p { font-size: 18px; max-width: 720px; }
-    .logo-card {
-      background: linear-gradient(145deg, rgba(255,255,255,.13), rgba(255,255,255,.04));
-      border: 1px solid var(--line); border-radius: 32px; padding: 30px; text-align: center;
-      box-shadow: var(--shadow);
-    }
-    .logo-card img { width: 100%; max-width: 360px; border-radius: 30px; }
-    .buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 13px 18px; border-radius: 14px; border: 1px solid var(--line);
-      color: var(--text); background: rgba(255,255,255,.08); font-weight: 800;
-      cursor: pointer;
-    }
-    .btn.primary { background: var(--accent); color: #02121f; border-color: transparent; }
-    .btn:hover { transform: translateY(-1px); text-decoration: none; }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
-    .card {
-      background: var(--card); border: 1px solid var(--line); border-radius: 24px;
-      padding: 22px; box-shadow: var(--shadow);
-    }
-    .mono {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      background: rgba(0,0,0,.24); border: 1px solid var(--line); border-radius: 14px;
-      padding: 12px; word-break: break-all; color: #e8f5ff;
-    }
-    .notice {
-      border-left: 4px solid var(--warn); background: rgba(255, 211, 106, .10);
-      padding: 14px 16px; border-radius: 16px; color: var(--warn);
-    }
-    .locker {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
-    }
-    label { display:block; font-weight: 800; margin: 10px 0 6px; }
+
+    button,
     input {
-      width: 100%; padding: 14px; border-radius: 14px; border: 1px solid var(--line);
-      background: rgba(0,0,0,.22); color: var(--text); font-size: 16px;
-      outline: none;
+      font: inherit;
     }
-    .small { font-size: 13px; color: var(--muted); }
-    #status { margin-top: 12px; color: var(--warn); white-space: pre-wrap; }
-    table { width:100%; border-collapse: collapse; margin-top: 12px; }
-    th, td { padding: 10px; border-bottom: 1px solid var(--line); text-align:left; color: var(--muted); }
-    th { color: var(--text); }
-    footer { padding: 40px 0; color: var(--muted); text-align: center; }
-    @media (max-width: 820px) {
-      header, .hero { grid-template-columns: 1fr; }
-      .hero { display:block; }
-      .grid, .locker { grid-template-columns: 1fr; }
-      nav { display:none; }
+
+    .shell {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(8, 10, 13, .72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+    }
+
+    .brand img {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(49, 100, 164, .28);
+    }
+
+    .brand span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      padding: 9px 11px;
+      border-radius: var(--radius);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, .07);
+    }
+
+    .hero {
+      min-height: 580px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(320px, .96fr);
+      gap: 52px;
+      align-items: center;
+      padding: 46px 0 62px;
+    }
+
+    .hero > * {
+      min-width: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 22px;
+      font-size: 74px;
+      line-height: .92;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-size: 34px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    p {
+      color: var(--muted);
+    }
+
+    .lead {
+      max-width: 650px;
+      margin-bottom: 0;
+      color: #d8e0ea;
+      font-size: 19px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--text);
+      background: rgba(255, 255, 255, .075);
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(49, 212, 199, .55);
+      color: var(--text);
+      background: rgba(255, 255, 255, .11);
+    }
+
+    .btn.primary {
+      border-color: transparent;
+      color: var(--accent-dark);
+      background: var(--accent);
+      box-shadow: 0 16px 34px rgba(49, 212, 199, .21);
+    }
+
+    .btn.ghost {
+      color: var(--muted);
+      background: transparent;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 420px;
+      display: grid;
+      place-items: center;
+    }
+
+    .metal-frame {
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .035)),
+        linear-gradient(45deg, transparent 0 34%, rgba(49, 212, 199, .13) 35% 38%, transparent 39% 100%);
+      box-shadow: var(--shadow);
+      transform: rotate(-2deg);
+    }
+
+    .token-mark {
+      position: relative;
+      width: min(360px, 72%);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      background: #173f75;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, .45);
+      overflow: hidden;
+    }
+
+    .token-mark::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0 42%, rgba(255, 255, 255, .2) 45%, transparent 50% 100%);
+      opacity: .45;
+    }
+
+    .token-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .ticker-strip {
+      width: min(var(--max), calc(100% - 40px));
+      margin: -28px auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(12, 16, 21, .86);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .ticker-item {
+      min-height: 98px;
+      padding: 19px 20px;
+      border-right: 1px solid var(--line);
+    }
+
+    .ticker-item:last-child {
+      border-right: 0;
+    }
+
+    .ticker-item span {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .ticker-item strong {
+      display: block;
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1.15;
+    }
+
+    section {
+      padding: 76px 0;
+    }
+
+    .section-head {
+      max-width: 680px;
+      margin-bottom: 28px;
+    }
+
+    .section-head p {
+      margin-bottom: 0;
+      font-size: 17px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .grid.two {
+      grid-template-columns: .92fr 1.08fr;
+      align-items: start;
+    }
+
+    .card {
+      height: 100%;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .card.highlight {
+      background:
+        linear-gradient(145deg, rgba(49, 212, 199, .16), rgba(255, 255, 255, .065));
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--soft);
+      background: rgba(255, 255, 255, .055);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .contract-box {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(0, 0, 0, .22);
+    }
+
+    .mono {
+      color: #edf6ff;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 14px;
+      word-break: break-all;
+    }
+
+    .copy-state {
+      min-height: 21px;
+      margin-top: 10px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .link-tile {
+      min-height: 138px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .065);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .link-tile:hover {
+      transform: translateY(-2px);
+      border-color: rgba(49, 212, 199, .5);
+      color: var(--text);
+      background: rgba(255, 255, 255, .095);
+    }
+
+    .link-tile span {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .link-tile strong {
+      font-size: 18px;
+    }
+
+    .locker-panel {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .status-banner {
+      margin: 18px 0;
+      padding: 14px 16px;
+      border: 1px solid rgba(242, 189, 87, .42);
+      border-radius: var(--radius);
+      color: #ffe2a4;
+      background: rgba(242, 189, 87, .11);
+      font-weight: 800;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 7px;
+      color: var(--soft);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    input {
+      width: 100%;
+      min-height: 48px;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      outline: none;
+      color: var(--text);
+      background: rgba(0, 0, 0, .24);
+    }
+
+    input:focus {
+      border-color: rgba(49, 212, 199, .72);
+      box-shadow: 0 0 0 3px rgba(49, 212, 199, .13);
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    #status {
+      min-height: 44px;
+      margin-top: 14px;
+      color: #ffe2a4;
+      white-space: pre-wrap;
+      font-weight: 800;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 560px;
+      border-collapse: collapse;
+      margin-top: 14px;
+    }
+
+    th,
+    td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      color: var(--text);
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    footer {
+      padding: 34px 0 44px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        padding-top: 44px;
+      }
+
+      .hero-visual {
+        min-height: 340px;
+      }
+
+      h1 {
+        font-size: 56px;
+      }
+
+      .ticker-strip,
+      .grid,
+      .grid.two,
+      .link-grid,
+      .locker-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .ticker-item {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .ticker-item:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell,
+      .ticker-strip {
+        width: min(var(--max), calc(100% - 28px));
+      }
+
+      .nav {
+        min-height: 68px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .brand img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .hero {
+        gap: 32px;
+        padding-bottom: 52px;
+      }
+
+      h1 {
+        font-size: 44px;
+      }
+
+      h2 {
+        font-size: 28px;
+      }
+
+      .lead {
+        font-size: 17px;
+        max-width: 340px;
+      }
+
+      .hero .actions {
+        max-width: 360px;
+      }
+
+      .hero-visual {
+        min-height: 250px;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .metal-frame {
+        inset: 14px 0;
+      }
+
+      .token-mark {
+        width: min(220px, 62vw);
+      }
+
+      .contract-box {
+        grid-template-columns: 1fr;
+      }
+
+      .actions .btn,
+      .contract-box .btn {
+        width: 100%;
+      }
+
+      section {
+        padding: 56px 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <img src="./tal13-logo.png" alt="TAL13 logo">
-        <div>TAL13</div>
-      </div>
-      <nav>
-        <a href="#about">About</a>
+  <header class="site-header">
+    <div class="shell nav">
+      <a class="brand" href="#top" aria-label="TAL13 home">
+        <img src="./tal13-logo.png" alt="TAL13 logo" />
+        <div>
+          TAL13
+          <span>BNB Chain token</span>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#about">Token</a>
+        <a href="#contract">Contract</a>
         <a href="#links">Links</a>
-        <a href="#locker">Token Lock</a>
-        <a href="#disclaimer">Disclaimer</a>
+        <a href="#locker">Lock</a>
       </nav>
-    </header>
+    </div>
+  </header>
 
-    <section class="hero">
+  <main id="top">
+    <section class="shell hero" aria-labelledby="hero-title">
       <div>
-        <span class="badge">BEP-20 · BNB Chain · Verified Contract</span>
-        <h1>Take Charge<br>of Tomorrow.</h1>
-        <p>
-          TAL13 is a BEP-20 community token on BNB Chain inspired by aluminum,
-          the chemical element with atomic number 13.
+        <div class="eyebrow">BEP-20 on BNB Chain</div>
+        <h1 id="hero-title">TAL13</h1>
+        <p class="lead">
+          A community token built around a clean metallic identity, fast BNB Chain rails,
+          and a verified smart contract.
         </p>
-        <div class="buttons">
-          <a class="btn primary" href="https://web3.okx.com/ru/token/bsc/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank">Trade on OKX DEX</a>
-          <a class="btn" href="https://bscscan.com/address/0xb88238565e5b168bc0257b80ce41067b5bf9fee3#code" target="_blank">BscScan</a>
-          <a class="btn" href="https://t.me/TAL13Official" target="_blank">Telegram</a>
+        <div class="actions">
+          <a class="btn primary" href="https://web3.okx.com/ru/token/bsc/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer">Trade on OKX DEX</a>
+          <a class="btn" href="https://bscscan.com/token/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer">View Token</a>
+          <a class="btn ghost" href="https://t.me/TAL13Official" target="_blank" rel="noopener noreferrer">Telegram</a>
         </div>
       </div>
-      <div class="logo-card">
-        <img src="./tal13-logo.png" alt="TAL13 token logo">
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="metal-frame"></div>
+        <div class="token-mark">
+          <img src="./tal13-logo.png" alt="" />
+        </div>
       </div>
     </section>
 
-    <section id="about" class="grid">
-      <div class="card">
-        <h2>Token</h2>
-        <p><b>Name:</b> tal13</p>
-        <p><b>Symbol:</b> TAL13</p>
-        <p><b>Network:</b> BNB Chain</p>
+    <div class="ticker-strip" aria-label="TAL13 quick facts">
+      <div class="ticker-item">
+        <span>Symbol</span>
+        <strong>TAL13</strong>
       </div>
-      <div class="card">
-        <h2>Contract</h2>
-        <p>Official TAL13 contract address:</p>
-        <div class="mono">0xb88238565e5b168bc0257b80ce41067b5bf9fee3</div>
+      <div class="ticker-item">
+        <span>Network</span>
+        <strong>BNB Chain</strong>
       </div>
-      <div class="card">
-        <h2>Community</h2>
-        <p>Follow the official TAL13 channel for announcements.</p>
-        <a class="btn" href="https://t.me/TAL13Official" target="_blank">Open Telegram</a>
+      <div class="ticker-item">
+        <span>Standard</span>
+        <strong>BEP-20</strong>
       </div>
-    </section>
+      <div class="ticker-item">
+        <span>Contract</span>
+        <strong>Verified</strong>
+      </div>
+    </div>
 
-    <section id="links" class="card">
-      <h2>Official Links</h2>
-      <p>Always check the contract address before trading.</p>
-      <div class="buttons">
-        <a class="btn primary" href="https://web3.okx.com/ru/token/bsc/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank">OKX DEX</a>
-        <a class="btn" href="https://bscscan.com/token/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank">Token Page</a>
-        <a class="btn" href="https://bscscan.com/address/0xb88238565e5b168bc0257b80ce41067b5bf9fee3#code" target="_blank">Verified Source</a>
-      </div>
-    </section>
-
-    <section id="locker" class="card">
-      <h2>TAL13 Token Lock</h2>
-      <p>
-        Users can lock TAL13 for a selected number of days. Minimum lock period: <b>1 day</b>.
-        To activate this section, deploy <b>TokenLocker.sol</b> from this website package and paste its address into <b>LOCKER_ADDRESS</b> inside index.html.
-      </p>
-      <div class="notice">
-        Current status: the website is ready, but the locker contract address must be deployed and added before locking works.
+    <section id="about" class="shell">
+      <div class="section-head">
+        <h2>Designed Around The Number 13</h2>
+        <p>
+          TAL13 takes its visual language from aluminum: sharp, light, industrial,
+          and easy to recognize across wallets, explorers and exchange pages.
+        </p>
       </div>
 
-      <div class="locker">
-        <div>
-          <label>Amount TAL13</label>
-          <input id="lockAmount" type="number" min="0" step="0.000000000000000001" placeholder="Example: 10">
-          <label>Days</label>
-          <input id="lockDays" type="number" min="1" step="1" value="1">
-          <div class="buttons">
-            <button class="btn" onclick="connectWallet()">Connect Wallet</button>
-            <button class="btn primary" onclick="approveAndLock()">Approve & Lock</button>
+      <div class="grid">
+        <article class="card highlight">
+          <h3>Clear Token Identity</h3>
+          <p>Name, ticker, network and contract are presented in one place so users can verify the right asset quickly.</p>
+          <div class="pill-row">
+            <span class="pill"><span class="dot"></span> TAL13</span>
+            <span class="pill">Atomic number 13</span>
           </div>
-          <div id="status"></div>
+        </article>
+        <article class="card">
+          <h3>BNB Chain Ready</h3>
+          <p>Fast settlement, broad wallet support and direct BscScan visibility make the token easy to inspect and follow.</p>
+        </article>
+        <article class="card">
+          <h3>Community First</h3>
+          <p>The official Telegram channel is the main place for TAL13 announcements, updates and community discussion.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contract" class="shell">
+      <div class="grid two">
+        <div class="section-head">
+          <h2>Official Contract</h2>
+          <p>Use this address when checking the token in a wallet, explorer or DEX interface.</p>
         </div>
-        <div>
-          <h2>Your Locks</h2>
-          <button class="btn" onclick="loadLocks()">Refresh Locks</button>
-          <div class="small">After unlock time, click Withdraw.</div>
-          <div id="locksTable"></div>
+
+        <div class="card">
+          <h3>TAL13 token address</h3>
+          <div class="contract-box">
+            <div class="mono" id="contractAddress">0xb88238565e5b168bc0257b80ce41067b5bf9fee3</div>
+            <button class="btn" type="button" onclick="copyContract()">Copy</button>
+          </div>
+          <div class="copy-state" id="copyState" aria-live="polite"></div>
+          <div class="actions">
+            <a class="btn primary" href="https://bscscan.com/address/0xb88238565e5b168bc0257b80ce41067b5bf9fee3#code" target="_blank" rel="noopener noreferrer">Verified Source</a>
+            <a class="btn" href="https://bscscan.com/token/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer">BscScan Token Page</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="disclaimer" class="card">
-      <h2>Important Disclaimer</h2>
-      <p class="notice">
-        TAL13 is not backed by physical aluminum and is not redeemable for metal.
-        The token price depends on market activity, liquidity and demand.
-      </p>
+    <section id="links" class="shell">
+      <div class="section-head">
+        <h2>Official Links</h2>
+        <p>Jump straight to the live TAL13 pages used by traders and community members.</p>
+      </div>
+
+      <div class="link-grid">
+        <a class="link-tile" href="https://web3.okx.com/ru/token/bsc/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer">
+          <strong>OKX DEX</strong>
+          <span>Open market page</span>
+        </a>
+        <a class="link-tile" href="https://bscscan.com/token/0xb88238565e5b168bc0257b80ce41067b5bf9fee3" target="_blank" rel="noopener noreferrer">
+          <strong>BscScan</strong>
+          <span>Inspect token activity</span>
+        </a>
+        <a class="link-tile" href="https://t.me/TAL13Official" target="_blank" rel="noopener noreferrer">
+          <strong>Telegram</strong>
+          <span>Join official channel</span>
+        </a>
+      </div>
     </section>
 
-    <footer>
-      © TAL13 · Community token on BNB Chain
-    </footer>
-  </div>
+    <section id="locker" class="shell">
+      <div class="section-head">
+        <h2>Token Lock</h2>
+        <p>Lock TAL13 for a selected number of days after the locker contract is deployed and connected.</p>
+      </div>
+
+      <div class="locker-panel">
+        <div class="card">
+          <h3>Create Lock</h3>
+          <div class="status-banner" id="lockerBanner">Locker contract is not connected yet.</div>
+
+          <label for="lockAmount">Amount TAL13</label>
+          <input id="lockAmount" type="number" min="0" step="0.000000000000000001" placeholder="Example: 10" />
+
+          <label for="lockDays">Days</label>
+          <input id="lockDays" type="number" min="1" step="1" value="1" />
+
+          <div class="actions">
+            <button class="btn" type="button" onclick="connectWallet()">Connect Wallet</button>
+            <button class="btn primary" type="button" onclick="approveAndLock()">Approve & Lock</button>
+          </div>
+          <div id="status" aria-live="polite"></div>
+        </div>
+
+        <div class="card">
+          <h3>Your Locks</h3>
+          <p class="small">Connect a wallet on BNB Smart Chain to load available TAL13 locks.</p>
+          <button class="btn" type="button" onclick="loadLocks()">Refresh Locks</button>
+          <div class="table-wrap" id="locksTable"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-row">
+      <span>&copy; TAL13. Community token on BNB Chain.</span>
+      <span class="mono">0xb88238565e5b168bc0257b80ce41067b5bf9fee3</span>
+    </div>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
   <script>
     const TAL13_ADDRESS = "0xb88238565e5b168bc0257b80ce41067b5bf9fee3";
-
-    // IMPORTANT:
-    // After you deploy TokenLocker.sol, paste the locker contract address here.
     const LOCKER_ADDRESS = "PASTE_LOCKER_CONTRACT_ADDRESS_HERE";
-
     const BSC_CHAIN_ID_HEX = "0x38";
 
     const tokenAbi = [
@@ -234,38 +856,90 @@
       "function getLocks(address user) external view returns (tuple(uint256 amount,uint256 unlockTime,bool withdrawn)[])"
     ];
 
-    let provider, signer, user;
+    let provider;
+    let signer;
+    let user;
 
-    function setStatus(msg) {
-      document.getElementById("status").innerText = msg;
+    function setStatus(message) {
+      document.getElementById("status").innerText = message;
+    }
+
+    function lockerIsActive() {
+      return LOCKER_ADDRESS && !LOCKER_ADDRESS.includes("PASTE_");
+    }
+
+    function checkLockerAddress() {
+      if (!lockerIsActive()) {
+        setStatus("Locker is not active yet. Deploy TokenLocker.sol and add its contract address to index.html.");
+        return false;
+      }
+
+      return true;
+    }
+
+    function updateLockerBanner() {
+      const banner = document.getElementById("lockerBanner");
+
+      if (lockerIsActive()) {
+        banner.innerText = "Locker contract connected.";
+        banner.style.borderColor = "rgba(128, 226, 140, .45)";
+        banner.style.color = "#c8ffd0";
+        banner.style.background = "rgba(128, 226, 140, .10)";
+      }
+    }
+
+    async function copyContract() {
+      const state = document.getElementById("copyState");
+
+      function fallbackCopy() {
+        const textarea = document.createElement("textarea");
+        textarea.value = TAL13_ADDRESS;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        const copied = document.execCommand("copy");
+        document.body.removeChild(textarea);
+        return copied;
+      }
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(TAL13_ADDRESS);
+        } else {
+          fallbackCopy();
+        }
+
+        state.innerText = "Contract copied.";
+      } catch (error) {
+        state.innerText = fallbackCopy()
+          ? "Contract copied."
+          : "Copy failed. Select the address manually.";
+      }
     }
 
     async function connectWallet() {
       if (!window.ethereum) {
-        setStatus("MetaMask / OKX Wallet not found.");
+        setStatus("MetaMask or OKX Wallet not found.");
         return;
       }
+
       await window.ethereum.request({ method: "eth_requestAccounts" });
+
       try {
         await window.ethereum.request({
           method: "wallet_switchEthereumChain",
           params: [{ chainId: BSC_CHAIN_ID_HEX }]
         });
-      } catch (e) {
-        setStatus("Please switch wallet to BNB Smart Chain Mainnet.");
+      } catch (error) {
+        setStatus("Please switch your wallet to BNB Smart Chain Mainnet.");
       }
+
       provider = new ethers.BrowserProvider(window.ethereum);
       signer = await provider.getSigner();
       user = await signer.getAddress();
       setStatus("Connected: " + user);
-    }
-
-    function checkLockerAddress() {
-      if (!LOCKER_ADDRESS || LOCKER_ADDRESS.includes("PASTE_")) {
-        setStatus("Locker is not active yet. Deploy TokenLocker.sol and paste its address into index.html.");
-        return false;
-      }
-      return true;
     }
 
     async function approveAndLock() {
@@ -280,6 +954,7 @@
           setStatus("Enter token amount.");
           return;
         }
+
         if (!daysInput || Number(daysInput) < 1) {
           setStatus("Minimum lock period is 1 day.");
           return;
@@ -300,8 +975,8 @@
 
         setStatus("Success. Tokens locked.");
         await loadLocks();
-      } catch (e) {
-        setStatus("Error: " + (e.shortMessage || e.message || e));
+      } catch (error) {
+        setStatus("Error: " + (error.shortMessage || error.message || error));
       }
     }
 
@@ -318,23 +993,27 @@
         let html = "<table><tr><th>ID</th><th>Amount</th><th>Unlock</th><th>Status</th><th>Action</th></tr>";
         const now = Math.floor(Date.now() / 1000);
 
-        locks.forEach((l, i) => {
-          const amount = ethers.formatUnits(l.amount, decimals);
-          const unlockTime = Number(l.unlockTime);
+        locks.forEach((lock, index) => {
+          const amount = ethers.formatUnits(lock.amount, decimals);
+          const unlockTime = Number(lock.unlockTime);
           const date = new Date(unlockTime * 1000).toLocaleString();
-          const canWithdraw = !l.withdrawn && now >= unlockTime;
+          const canWithdraw = !lock.withdrawn && now >= unlockTime;
+          const status = lock.withdrawn ? "Withdrawn" : canWithdraw ? "Ready" : "Locked";
+          const action = canWithdraw ? `<button class="btn" type="button" onclick="withdrawLock(${index})">Withdraw</button>` : "-";
+
           html += `<tr>
-            <td>${i}</td>
+            <td>${index}</td>
             <td>${amount}</td>
             <td>${date}</td>
-            <td>${l.withdrawn ? "Withdrawn" : canWithdraw ? "Ready" : "Locked"}</td>
-            <td>${canWithdraw ? `<button class="btn" onclick="withdrawLock(${i})">Withdraw</button>` : "-"}</td>
+            <td>${status}</td>
+            <td>${action}</td>
           </tr>`;
         });
+
         html += "</table>";
         document.getElementById("locksTable").innerHTML = html;
-      } catch (e) {
-        setStatus("Error: " + (e.shortMessage || e.message || e));
+      } catch (error) {
+        setStatus("Error: " + (error.shortMessage || error.message || error));
       }
     }
 
@@ -342,16 +1021,19 @@
       try {
         if (!checkLockerAddress()) return;
         if (!signer) await connectWallet();
+
         const locker = new ethers.Contract(LOCKER_ADDRESS, lockerAbi, signer);
         setStatus("Withdrawing lock #" + id + "...");
         const tx = await locker.withdraw(BigInt(id));
         await tx.wait();
         setStatus("Withdrawn.");
         await loadLocks();
-      } catch (e) {
-        setStatus("Error: " + (e.shortMessage || e.message || e));
+      } catch (error) {
+        setStatus("Error: " + (error.shortMessage || error.message || error));
       }
     }
+
+    updateLockerBanner();
   </script>
 </body>
 </html>
