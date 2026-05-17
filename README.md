@@ -6,6 +6,7 @@ The site includes a wallet profile, live DEX price lookup, aluminum market refer
 ## Files
 
 - `index.html` - website
+- `profile.html` - dedicated wallet profile page
 - `data/aluminum.json` - generated aluminum reference price/history
 - `scripts/update-aluminum.mjs` - updater for aluminum data
 - `.github/workflows/update-aluminum.yml` - scheduled GitHub Action for data refresh
