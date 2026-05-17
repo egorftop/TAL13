@@ -986,8 +986,8 @@
             <small id="selectedPair">--</small>
           </div>
           <div class="metric">
-            <span data-i18n="metricAlTon">Aluminum / metric ton</span>
-            <strong id="aluminumPriceTon">--</strong>
+            <span data-i18n="metricAlKgCard">Aluminum / kg</span>
+            <strong id="aluminumPriceKgCard">--</strong>
             <small id="aluminumUpdated">--</small>
           </div>
         </div>
@@ -1140,7 +1140,7 @@
         metricTalPrice: "TAL13 Price",
         metricTalAl: "1 TAL13 in Aluminum",
         metricLiquidity: "Selected Liquidity",
-        metricAlTon: "Aluminum / metric ton",
+        metricAlKgCard: "Aluminum / kg",
         chartTitle: "Aluminum Price Chart",
         loadingPrices: "Loading prices",
         pricesLoaded: "Prices loaded",
@@ -1218,7 +1218,7 @@
         metricTalPrice: "Цена TAL13",
         metricTalAl: "1 TAL13 в алюминии",
         metricLiquidity: "Выбранная ликвидность",
-        metricAlTon: "Алюминий / тонна",
+        metricAlKgCard: "Алюминий / кг",
         chartTitle: "График цены алюминия",
         loadingPrices: "Загрузка цен",
         pricesLoaded: "Цены загружены",
@@ -1574,7 +1574,7 @@
       setText("talPriceUsd", talPriceText);
       setText("talAlEquivalent", talAlKg === null ? "--" : `${formatNumber(talAlKg, 6)} kg`);
       setText("aluminumPriceKg", aluminumKg ? `${formatUsd(aluminumKg, 4)} / kg` : "--");
-      setText("aluminumPriceTon", aluminumTon ? formatUsd(aluminumTon, 2) : "--");
+      setText("aluminumPriceKgCard", aluminumKg ? formatUsd(aluminumKg, 4) : "--");
 
       const liquidity = Number(state.talPair?.liquidity?.usd || NaN);
       setText("selectedLiquidity", Number.isFinite(liquidity) ? formatUsd(liquidity, 2) : "--");
