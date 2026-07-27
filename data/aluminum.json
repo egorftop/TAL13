@@ -1,15 +1,10 @@
 {
-  "updatedAt": "2026-07-26T08:37:40.862Z",
+  "updatedAt": "2026-07-27T10:06:22.521Z",
   "source": "Yahoo Finance ALI=F / COMEX Aluminum Futures",
   "unit": "USD per metric ton, converted to USD per kg",
-  "priceUsdPerMetricTon": 3448.75,
-  "priceUsdPerKg": 3.44875,
+  "priceUsdPerMetricTon": 3474.25,
+  "priceUsdPerKg": 3.47425,
   "history": [
-    {
-      "date": "2026-01-26",
-      "priceUsdPerMetricTon": 3137,
-      "priceUsdPerKg": 3.137
-    },
     {
       "date": "2026-01-27",
       "priceUsdPerMetricTon": 3111.5,
@@ -627,8 +622,13 @@
     },
     {
       "date": "2026-07-24",
-      "priceUsdPerMetricTon": 3448.75,
-      "priceUsdPerKg": 3.44875
+      "priceUsdPerMetricTon": 3528,
+      "priceUsdPerKg": 3.528
+    },
+    {
+      "date": "2026-07-27",
+      "priceUsdPerMetricTon": 3474.25,
+      "priceUsdPerKg": 3.47425
     }
   ]
 }
